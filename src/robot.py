@@ -19,22 +19,23 @@ class MyRobot(wpilib.SampleRobot):
 
     # The channel on the driver station that the joystick is connected to
     xchannel0 = 0
+
     xchannel1 = 1
 
     def robotInit(self):
         """Robot initialization function"""
-        self.frontLeftMotor = wpilib.Spark(self.frontLeftChannel)
-        self.rearLeftMotor = wpilib.Spark(self.rearLeftChannel)
-        self.frontRightMotor = wpilib.Spark(self.frontRightChannel)
-        self.rearRightMotor = wpilib.Spark(self.rearRightChannel)
+        self.frontLeftMotor = wpilib.VictorSP(self.frontLeftChannel)
+        self.rearLeftMotor = wpilib.VictorSP(self.rearLeftChannel)
+        self.frontRightMotor = wpilib.VictorSP(self.frontRightChannel)
+        self.rearRightMotor = wpilib.VictorSP(self.rearRightChannel)
 
         # invert the left side motors
-        self.frontLeftMotor.setInverted(True)
+      #  self.frontLeftMotor.setInverted(True)
 
         # you may need to change or remove this to match your robot
-        self.rearLeftMotor.setInverted(True)
-        self.frontRightMotor.setInverted(True)
-        self.rearRightMotor.setInverted(True)
+       # self.rearLeftMotor.setInverted(True)
+       # self.frontRightMotor.setInverted(True)
+       # self.rearRightMotor.setInverted(True)
 
         self.drive = MecanumDrive(
             self.frontLeftMotor,
@@ -56,7 +57,7 @@ class MyRobot(wpilib.SampleRobot):
             # Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
             # This sample does not use field-oriented drive, so the gyro input is set to zero.
             self.drive.driveCartesian(
-                -self.xbox0.getX(), self.xbox0.getY(), -self.xbox0.getZ(), 0
+                -self.xbox0.getX(0), -self.xbox0.getY(0), 0
             )
 
             wpilib.Timer.delay(0.005)  # wait 5ms to avoid hogging CPU cycles
