@@ -12,14 +12,13 @@ from networktables import NetworkTables
 
 class MyRobot(wpilib.SampleRobot):
     # Channels on the roboRIO that the motor controllers are plugged in to
-    frontLeftChannel = 1
-    rearLeftChannel = 3
+    frontLeftChannel = 0
+    rearLeftChannel = 1
     frontRightChannel = 2
-    rearRightChannel = 4
+    rearRightChannel = 3
 
     # The channel on the driver station that the joystick is connected to
     xchannel0 = 0
-
     xchannel1 = 1
 
     def robotInit(self):
@@ -57,7 +56,7 @@ class MyRobot(wpilib.SampleRobot):
             # Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
             # This sample does not use field-oriented drive, so the gyro input is set to zero.
             self.drive.driveCartesian(
-                -self.xbox0.getX(0), -self.xbox0.getY(0), 0
+                -self.xbox0.getX(1), -self.xbox0.getY(0), self.xbox0.getX(0), 0
             )
 
             wpilib.Timer.delay(0.005)  # wait 5ms to avoid hogging CPU cycles
