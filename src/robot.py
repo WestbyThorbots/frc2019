@@ -7,60 +7,36 @@
 """
 
 import wpilib
-from wpilib.drive import MecanumDrive
-from networktables import NetworkTables
+from wpilib.drive import DifferentialDrive
 
-class MyRobot(wpilib.SampleRobot):
-    # Channels on the roboRIO that the motor controllers are plugged in to
-    frontLeftChannel = 0
-    rearLeftChannel = 1
-    frontRightChannel = 2
-    rearRightChannel = 3
-
-    # The channel on the driver station that the joystick is connected to
-    xchannel0 = 0
-    xchannel1 = 1
-
+class MyRobot(wpilib.IterativeRobot):
     def robotInit(self):
         """Robot initialization function"""
-        self.frontLeftMotor = wpilib.VictorSP(self.frontLeftChannel)
-        self.rearLeftMotor = wpilib.VictorSP(self.rearLeftChannel)
-        self.frontRightMotor = wpilib.VictorSP(self.frontRightChannel)
-        self.rearRightMotor = wpilib.VictorSP(self.rearRightChannel)
+        self.efacing = 1
+        # object that handles basic drive operations
+        self.left = wpilib.VictorSP(0)
+        self.right = wpilib.VictorSP(1)
 
-        # invert the left side motors
-      #  self.frontLeftMotor.setInverted(True)
+        self.myRobot = DifferentialDrive(self.left, self.right)
 
-        # you may need to change or remove this to match your robot
-       # self.rearLeftMotor.setInverted(True)
-       # self.frontRightMotor.setInverted(True)
-       # self.rearRightMotor.setInverted(True)
+        self.servo = wpilib.Servo(2)
 
-        self.drive = MecanumDrive(
-            self.frontLeftMotor,
-            self.rearLeftMotor,
-            self.frontRightMotor,
-            self.rearRightMotor,
-        )
+        self.myRobot.setExpiration(0.1)
 
-        self.drive.setExpiration(0.1)
+        # joysticks 1 & 2 on the driver station
+        self.XBox0 = wpilib.XboxController(0)
+        self.XBox1 = wpilib.XboxController(1)
 
-        self.xbox0 = wpilib.XboxController(self.xchannel0)
-        self.xbox1 = wpilib.XboxController(self.xchannel1)
+    def teleopInit(self):
+        """Executed at the start of teleop mode"""
+        self.myRobot.setSafetyEnabled(True)
 
-    def operatorControl(self):
-        """Runs the motors with Mecanum drive."""
+    def teleopPeriodic(self):
+        """Runs the motors with tank steering"""
+        if self.XBox0.getStartButtonPressed():
+            self.efacing *= -1
 
-        self.drive.setSafetyEnabled(True)
-        while self.isOperatorControl() and self.isEnabled():
-            # Use the joystick X axis for lateral movement, Y axis for forward movement, and Z axis for rotation.
-            # This sample does not use field-oriented drive, so the gyro input is set to zero.
-            self.drive.driveCartesian(
-                -self.xbox0.getX(1), -self.xbox0.getY(0), self.xbox0.getX(0), 0
-            )
-
-            wpilib.Timer.delay(0.005)  # wait 5ms to avoid hogging CPU cycles
-
+        self.myRobot.arcadeDrive(self.XBox0.getY(0)* -self.efacing, self.XBox0.getX(0)* self.efacing)
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)
