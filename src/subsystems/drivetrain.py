@@ -3,12 +3,12 @@ import math
 import wpilib
 from wpilib.command import Subsystem
 
-from commands.tankdrive_with_joystick import TankDriveWithJoystick
+from commands.differentialdrive_with_xbox import DifferentialDriveWithXbox
 
 
 class DriveTrain(Subsystem):
     """The DriveTrain subsystem incorporates the sensors and actuators attached to
-       the robots chassis. These include four drive motors, a left and right encoder
+       the robots chassis. These include two drive motors, a left and right encoder
        and a gyro.
     """
 
@@ -16,17 +16,12 @@ class DriveTrain(Subsystem):
         super().__init__()
         self.robot = robot
 
-        self.front_left_motor = wpilib.Talon(1)
-        self.back_left_motor = wpilib.Talon(2)
-        self.front_right_motor = wpilib.Talon(3)
-        self.back_right_motor = wpilib.Talon(4)
+        self.left = wpilib.VictorSP(0)
+        self.right = wpilib.VictorSP(1)
+        """Motors used for driving"""
 
-        self.drive = wpilib.RobotDrive(
-            self.front_left_motor,
-            self.back_left_motor,
-            self.front_right_motor,
-            self.back_right_motor,
-        )
+        self.drive = wpilib.DifferentialDrive(self.left, self.right)
+        """DifferentialDrive is the main object that deals with driving"""
 
         self.left_encoder = wpilib.Encoder(1, 2)
         self.right_encoder = wpilib.Encoder(3, 4)
@@ -82,8 +77,8 @@ class DriveTrain(Subsystem):
         wpilib.SmartDashboard.putNumber("Gyro", self.gyro.getAngle())
 
     def driveManual(self, left, right):
-        """ Tank style driving for the DriveTrain. 
-            
+        """ Tank style driving for the DriveTrain.
+
             :param left: Speed in range [-1, 1]
             :param right: Speed in range [-1, 1]
         """
