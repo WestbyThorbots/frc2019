@@ -8,6 +8,7 @@
 
 import wpilib
 from wpilib.drive import DifferentialDrive
+from wpilib import DoubleSolenoid
 
 class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
@@ -40,14 +41,14 @@ class MyRobot(wpilib.TimedRobot):
         """I mostly just added these motor controllers anticipating some sort
         of intake system that uses motors."""
 
-        #self.Punch = wpilib.Solenoid(4)
-        self.DPunch = wpilib.DoubleSolenoid(0,1)
+        self.Punch = wpilib.DoubleSolenoid(0, 1)
+        self.DPunch = wpilib.DoubleSolenoid(3, 2)
         """The punching mechanism for removal of the hatch panels can use a
         DoubleSolenoid or regular Solenoid. The Solenoid only needs the channel
         it's plugged into (4) whereas the Double Solenoid needs the module
         number, forward channel number, and reverse channel order in that
         order."""
-        
+
         self.XBox0 = wpilib.XboxController(0)
         self.XBox1 = wpilib.XboxController(1)
         """Xbox controllers 1 and 2 on the driver station."""
@@ -71,26 +72,17 @@ class MyRobot(wpilib.TimedRobot):
             self.efacing *= -1
             """This will invert our controls."""
 
-        if self.XBox0.getAButtonPressed():
-            self.Punch.set(True)
-            print ("Punch is True")
-        else:
-            self.Punch.set(False)
-            #print ("Punch is False")
-            """Operates the puncher controlled by a solenoid."""
+        if self.XBox0.getAButton():
+            self.Punch.set(DoubleSolenoid.Value.kForward)
+            print ("Punch is Forward")
+        else: 
+            self.Punch.set(DoubleSolenoid.Value.kReverse)
 
-        if self.XBox0.getBButtonPressed():
-            self.DPunch.set(1)
-            print ("DPunch is 1")
+        if self.XBox0.getBButton():
+            self.DPunch.set(DoubleSolenoid.Value.kForward)
+            print ("DPunch is Forward")
         else:
-            self.DPunch.set(2)
-            #print ("DPunch is 2")
-            """Operates the puncher controlled by a double solenoid."""
-
-        #if self.XBox0.getAButtonPressed():
-        #self.RotServo.setAngle(90)
-        #print ("rotated servo 90 degrees")
-        #self.myRobot.arcadeDrive(1,0)
+            self.DPunch.set(DoubleSolenoid.Value.kReverse)
 
         self.myRobot.arcadeDrive(self.XBox0.getY(0)* -self.efacing, self.XBox0.getX(0)* self.efacing)
         """The efacing variable is here to invert our controls. It's negative
