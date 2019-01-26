@@ -2,6 +2,7 @@ import math
 
 import wpilib
 from wpilib.command import Subsystem
+from wpilib import robotdrive
 
 from commands.differentialdrive_with_xbox import DifferentialDriveWithXbox
 
@@ -20,9 +21,10 @@ class DriveTrain(Subsystem):
         self.right = wpilib.VictorSP(1)
         """Motors used for driving"""
 
-        self.drive = wpilib.DifferentialDrive(self.left, self.right)
-        """DifferentialDrive is the main object that deals with driving"""
+        """TODO: switch to DifferentialDrive is the main object that deals with driving"""
+        self.drive = wpilib.RobotDrive(self.left, self.right)
 
+        """TODO: These probably will not be the actual ports used"""
         self.left_encoder = wpilib.Encoder(1, 2)
         self.right_encoder = wpilib.Encoder(3, 4)
 
@@ -31,6 +33,7 @@ class DriveTrain(Subsystem):
         # per tick in the real world, but the simulated encoders
         # simulate 360 tick encoders. This if statement allows for the
         # real robot to handle this difference in devices.
+        """TODO: Measure our encoder's distance per pulse"""
         if robot.isReal():
             self.left_encoder.setDistancePerPulse(0.042)
             self.right_encoder.setDistancePerPulse(0.042)
@@ -42,39 +45,24 @@ class DriveTrain(Subsystem):
         self.rangefinder = wpilib.AnalogInput(6)
         self.gyro = wpilib.AnalogGyro(1)
 
+        """
         wpilib.LiveWindow.addActuator(
-            "Drive Train", "Front_Left Motor", self.front_left_motor
+            "Drive Train", "Front_Left Motor", self.right
         )
         wpilib.LiveWindow.addActuator(
-            "Drive Train", "Back Left Motor", self.back_left_motor
+            "Drive Train", "Back Left Motor", self.left
         )
-        wpilib.LiveWindow.addActuator(
-            "Drive Train", "Front Right Motor", self.front_right_motor
-        )
-        wpilib.LiveWindow.addActuator(
-            "Drive Train", "Back Right Motor", self.back_right_motor
-        )
+
         wpilib.LiveWindow.addSensor("Drive Train", "Left Encoder", self.left_encoder)
         wpilib.LiveWindow.addSensor("Drive Train", "Right Encoder", self.right_encoder)
         wpilib.LiveWindow.addSensor("Drive Train", "Rangefinder", self.rangefinder)
         wpilib.LiveWindow.addSensor("Drive Train", "Gyro", self.gyro)
+        """
 
     def initDefaultCommand(self):
         """When no other command is running let the operator drive around
            using the PS3 joystick"""
-        self.setDefaultCommand(TankDriveWithJoystick(self.robot))
-
-    def log(self):
-        """The log method puts interesting information to the SmartDashboard."""
-        wpilib.SmartDashboard.putNumber(
-            "Left Distance", self.left_encoder.getDistance()
-        )
-        wpilib.SmartDashboard.putNumber(
-            "Right Distance", self.right_encoder.getDistance()
-        )
-        wpilib.SmartDashboard.putNumber("Left Speed", self.left_encoder.getRate())
-        wpilib.SmartDashboard.putNumber("Right Speed", self.right_encoder.getRate())
-        wpilib.SmartDashboard.putNumber("Gyro", self.gyro.getAngle())
+        self.setDefaultCommand(DifferentialDriveWithXbox(self.robot))
 
     def driveManual(self, left, right):
         """ Tank style driving for the DriveTrain.
@@ -82,7 +70,7 @@ class DriveTrain(Subsystem):
             :param left: Speed in range [-1, 1]
             :param right: Speed in range [-1, 1]
         """
-        self.drive.tankDrive(left, right)
+        self.drive.arcadeDrive(left, right)
 
     def driveJoystick(self, joy):
         """:param joy: The ps3 style joystick to use to drive tank style"""
@@ -101,11 +89,12 @@ class DriveTrain(Subsystem):
     def getDistance(self):
         """ :returns: The distance driven (average of left and right encoders)"""
         return (
-            self.left_encoder.getDistance() + self.right_encoder.getDistance()
+            self.left_encoder.getDistance().__init__()
         ) / 2.0
 
-    def getDistanceToObstacle(self):
-        """ :returns: The distance to the obstacle detected by the rangefinder"""
+    """TODO: Make this work"""
+    def getDistanceToObstacle(self):super().__init__()
+    """ :returns: The distance to the obstacle detected by the rangefinder"""
 
         # Really meters in simulation since it's a rangefinder...
-        return self.rangefinder.getAverageVoltage()
+        # return self.rangefinder.getAverageVoltage()

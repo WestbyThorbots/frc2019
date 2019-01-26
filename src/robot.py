@@ -75,7 +75,7 @@ class MyRobot(wpilib.TimedRobot):
         if self.XBox0.getAButton():
             self.Punch.set(DoubleSolenoid.Value.kForward)
             print ("Punch is Forward")
-        else: 
+        else:
             self.Punch.set(DoubleSolenoid.Value.kReverse)
 
         if self.XBox0.getBButton():
