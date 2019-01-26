@@ -1,3 +1,4 @@
 .installer_config
 opkg_cache
 pip_cache
+.vscode/
