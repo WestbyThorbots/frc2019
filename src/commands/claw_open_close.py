@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-from wpilib import XboxController
 
 from wpilib.command import Command
 
@@ -26,7 +25,7 @@ class ClawOpen(Command):
         self.robot.claw.open()
 
     def interrupted(self):
-        """Called when another command which requires one or more of the same
+        """Called when another Command which requires one or more of the same
            subsystems is scheduled to run"""
         self.end()
 
@@ -53,6 +52,6 @@ class ClawClose(Command):
         self.robot.claw.close()
 
     def interrupted(self):
-        """Called when another command which requires one or more of the same
+        """Called when another Command which requires one or more of the same
            subsystems is scheduled to run"""
         self.end()
