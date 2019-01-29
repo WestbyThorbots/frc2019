@@ -15,7 +15,7 @@ class Intake(Subsystem):
 
         self.intake = wpilib.Talon(6)
 
-    def intake(self):
+    def spin(self):
         self.intake.set(1.0)
 
     def stop(self):

@@ -83,7 +83,7 @@ class MyRobot(wpilib.TimedRobot):
             print ("DPunch is Forward")
         else:
             self.DPunch.set(DoubleSolenoid.Value.kReverse)
-
+        
         self.myRobot.arcadeDrive(self.XBox0.getY(0)* -self.efacing, self.XBox0.getX(0)* self.efacing)
         """The efacing variable is here to invert our controls. It's negative
         on the Y axis because otherwise it will be inverted incorrectly."""
