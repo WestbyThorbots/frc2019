@@ -46,6 +46,13 @@ class PhysicsEngine(object):
         )
         # fmt: on
 
+        # Precompute the encoder constant
+        # -> encoder counts per revolution / wheel circumference
+        self.kEncoder = 360 / (0.5 * math.pi)
+
+        self.l_distance = 0
+        self.r_distance = 0
+
     def update_sim(self, hal_data, now, tm_diff):
         """
             Called when the simulation parameters for the program need to be
@@ -53,7 +60,7 @@ class PhysicsEngine(object):
 
             :param now: The current time as a float
             :param tm_diff: The amount of time that has passed since the last
-                            time that this function was called
+             time that this function was called
         """
 
         # Simulate the drivetrain
@@ -83,3 +90,10 @@ class PhysicsEngine(object):
         hal_data["dio"][1]["value"] = switch1
         hal_data["dio"][2]["value"] = switch2
         hal_data["analog_in"][2]["voltage"] = self.position
+
+        # Update encoders
+        self.l_distance += self.drivetrain.l_velocity * tm_diff
+        self.r_distance += self.drivetrain.r_velocity * tm_diff
+
+        hal_data["encoder"][0]["count"] = int(self.l_distance * self.kEncoder)
+        hal_data["encoder"][1]["count"] = int(self.r_distance * self.kEncoder)
