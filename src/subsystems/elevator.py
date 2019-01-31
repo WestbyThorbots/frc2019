@@ -24,7 +24,7 @@ class Elevator(Subsystem):
 
     def StopFront(self):
         self.FrontElevator.set(0.0)
-    
+
     def LiftRear(self):
         self.RearElevator.set(1.0)
 
@@ -33,3 +33,15 @@ class Elevator(Subsystem):
 
     def StopRear(self):
         self.RearElevator.set(0.0)
+
+    def Lift(self):
+        self.LiftFront()
+        self.LiftRear()
+
+    def Lower(self):
+        self.LowerFront()
+        self.LowerRear()
+
+    def Stop(self):
+        self.StopFront()
+        self.StopRear()
