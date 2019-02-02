@@ -11,5 +11,5 @@ class OI:
 
         self.xbox0 = wpilib.XboxController(0)
 
-    def GetXboxController(self):
+    def getXbox0(self):
         return self.xbox0
