@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""
-arm.py: implement the arm into code.
-"""
+
+#arm.py controls how the arm moves up and down.
+
 import wpilib
 from wpilib.command import Subsystem
 
@@ -47,4 +47,3 @@ class Wrist(Subsystem):
             self.wrist.set(0.0)
             #TODO: Change 0.0 to a value that won't let the claw lower WITH CARGO!!
 
-            
