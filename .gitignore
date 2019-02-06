@@ -3,3 +3,4 @@ opkg_cache
 pip_cache
 .vscode/
 .deploy_cfg
+__pycache__/
