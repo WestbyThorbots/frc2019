@@ -11,20 +11,30 @@ class Arm(Subsystem):
     manually while also being able to change its height to one of three levels automatically.
     """
 
-    def __init__(self):
+    def __init__(self, robot):
         super().__init__()
 
-        self.arm = wpilib.Talon(9)
+        self.arm = wpilib.Talon(2)
+        self.robot = robot
+        print ("Hey we made an arm")
 
-    def lift(self):
-        self.arm.set(self.speed)
+    """def lift(self, controller):
+        self.arm.set(controller.getLeftTrigger())
 
-    def lower(self):
-        self.arm.set(self.speed)
+    def lower(self, controller):
+        self.arm.set(controller.getRightTrigger())
 
     def stop(self):
         self.arm.set(0.0)
         #TODO: Change 0.0 to a value that holds the arm at its current value so it doesn't fall.
+"""
+
+    def MoveArm(self, value):
+        self.arm.set(value)
+        print ("In MoveArm value is " + "%2.5f" % value)
+
+    def StopArm(self, controller):
+        self.arm.set(0)
 
 class Wrist(Subsystem):
     """

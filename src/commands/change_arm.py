@@ -6,27 +6,30 @@ the 3 stages of the rocket.
 
 from wpilib.command import Command
 
-class LiftArm (Command):
-     def __init__(self, robot):
+class MoveArm (Command):
+    def __init__(self, robot):
         super().__init__()
+        
+        self.robot = robot
+        self.requires(self.robot.arm)
 
-            self.robot = robot
-            self.requires(self.robot.arm)
-
-      def initialize(self):
+    def initialize(self):
         """ TODO: fill in the missing pieces for initialization. """
-        pass
 
-    def execute(self):
+
+    def execute(self, controller):
         """ TODO: make the lift actually do something. """
-        pass
+        value = self.robot.oi.getRightTrigger() - self.robot.oi.getLeftTrigger()
+        print ("In MoveArm value is " + "%2.5f" % value)
+        self.robot.arm.MoveArm(value)
+        
 
     def isFinished(self):
         """ Return "True" when we are done with this command. """
         return self.isTimedOut()
 
     def end(self):
-        self.robot.arm.Stop()
+        self.robot.arm.StopArm()
 
     def interrupted(self):
         self.end()
