@@ -29,9 +29,15 @@ class Arm(Subsystem):
         #TODO: Change 0.0 to a value that holds the arm at its current value so it doesn't fall.
 """
 
-    def MoveArm(self, value):
-        self.arm.set(value)
+    def RaiseArm(self, value):
+        self.arm.set(0.75)
         print ("In MoveArm value is " + "%2.5f" % value)
+
+    def LowerArm(self, value):
+        self.arm.set(-0.75)
+
+    def MoveArm(self, value):
+        pass
 
     def StopArm(self, controller):
         self.arm.set(0)

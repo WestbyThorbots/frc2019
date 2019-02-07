@@ -2,16 +2,18 @@
 import wpilib
 from wpilib import DoubleSolenoid
 from wpilib.command import Subsystem
+from commands.punch import Punch
 
 class Puncher(Subsystem):
     """
     Puncher subsystem. This is a pneumatic puncher, Implemented with
     a double solenoid to fire the puncher.
     """
-    def __init__(self):
+    def __init__(self, robot):
         super().__init__()
+        self.robot = robot
 
-        self.puncher = wpilib.DoubleSolenoid(0,2,3)
+        self.puncher = DoubleSolenoid(0,2,3)
 
     def open(self):
         self.puncher.set(DoubleSolenoid.Value.kReverse)
