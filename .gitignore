@@ -5,3 +5,4 @@ pip_cache
 .deploy_cfg
 __pycache__/
 .pytest_cache/
+classes.dot
