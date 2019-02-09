@@ -9,9 +9,8 @@ class Puncher(Subsystem):
     Puncher subsystem. This is a pneumatic puncher, Implemented with
     a double solenoid to fire the puncher.
     """
-    def __init__(self, robot):
+    def __init__(self):
         super().__init__()
-        self.robot = robot
 
         self.puncher = DoubleSolenoid(0,3,2)
 

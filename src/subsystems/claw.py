@@ -2,7 +2,8 @@
 import wpilib
 from wpilib import DoubleSolenoid
 from wpilib.command import Subsystem
-
+from commands.open_claw import OpenClaw
+from commands.close_claw import CloseClaw
 class Claw(Subsystem):
     """
     Claw subsystem. This is a pneumatic claw, Implemented with
