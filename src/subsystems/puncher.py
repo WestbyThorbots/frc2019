@@ -13,7 +13,7 @@ class Puncher(Subsystem):
         super().__init__()
         self.robot = robot
 
-        self.puncher = DoubleSolenoid(0,2,3)
+        self.puncher = DoubleSolenoid(0,3,2)
 
     def open(self):
         self.puncher.set(DoubleSolenoid.Value.kReverse)

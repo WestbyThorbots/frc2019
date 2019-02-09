@@ -63,7 +63,7 @@ class DriveTrain(Subsystem):
     def driveXbox0(self, controller):
         #:param joy: The ps3 style joystick to use to drive tank style
         # self.driveManual(-joy.getY(), -joy.getAxis(wpilib.Joystick.AxisType.kThrottle))
-        self.driveManual(controller.getY(0), controller.getX(0)* -1)
+        self.driveManual(controller.getY(0), controller.getX(0))
 
     def getHeading(self):
         # :returns: The robots heading in degrees
