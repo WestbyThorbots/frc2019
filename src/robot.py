@@ -3,25 +3,22 @@ import math
 import wpilib
 from commandbased import CommandBasedRobot
 from wpilib.command import Scheduler
-from oi import OI
 from subsystems.drivetrain import DriveTrain
 from subsystems.puncher import Puncher
-#from .subsystems.arm import Arm
-#from .subsystems.arm import Arm
-#from .subsystems.claw import Claw
-#from .subsystems.elevator import Elevator
-#from .subsystems.hatch import Hatch
-#from .subsystems.intake import Intake
-#from .commands.change_arm import MoveArm
+from subsystems.claw import Claw
+from subsystems.arm import Arm
+from commands.move_arm_with_triggers import MoveArmWithTriggers
+from oi import OI
 
 class MyRobot(CommandBasedRobot):
     #Our robot is pieced together in this class.
 
     def robotInit(self):
         self.drivetrain = DriveTrain(self)
-        self.puncher = Puncher(self)
+        self.puncher = Puncher()
+        self.claw = Claw()
+        self.arm = Arm()
         self.oi = OI(self)
-        #self.arm = Arm(self)
 
     def disabledInit(self):
         return super().disabledInit()
@@ -33,7 +30,7 @@ class MyRobot(CommandBasedRobot):
         return super().autonomousInit()
 
     def autonomousPeriodic(self):
-        Scheduler.getInstance().run()
+        Scheduler.getInstance().run()    
 
     def teleopInit(self):
         return super().teleopInit()
