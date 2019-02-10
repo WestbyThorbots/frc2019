@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 '''Operator Interface - one class: OI.
+This is where the rubber meets the road: make the Xbox controller
+do what we want it to do.
 '''
 from commands.punch import Punch
 from commands.pull import Pull
@@ -7,7 +9,6 @@ from commands.open_claw import OpenClaw
 from commands.close_claw import CloseClaw
 from commands.move_arm_with_triggers import MoveArmWithTriggers
 
-#from commands.differentialdrive_with_xbox import DifferentialDriveWithXbox
 from wpilib.buttons import JoystickButton
 from wpilib import XboxController
 import wpilib
@@ -20,6 +21,9 @@ class OI:
     '''
 
     def __init__(self, robot):
+        '''The Constructor - assign Xbox controller buttons to specific Commands.
+        '''
+
         print("In OI:__init__")
 
         self.xbox0 = wpilib.XboxController(0)
@@ -36,12 +40,7 @@ class OI:
 
         claw.toggleWhenPressed(OpenClaw(robot))
 
-        #self.button2.whenPressed(new Grab())
-		#self.button3.whenPressed(new DriveToDistance(0.11))
-		#self.button4.whenPressed(new PlaceSoda())
-        #self.button5.whenPressed(new PlaceSoda())
-		#self.button6.whenPressed(new DriveToDistance(0.2))
-		#self.button8.whenPressed(new Stow())
-
     def getXbox0(self):
+        '''Return the first Xbox controller connected to the system.
+        '''
         return self.xbox0
