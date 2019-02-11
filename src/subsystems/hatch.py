@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
+"""Operate the hatch mechanism."""
+
 import wpilib
 from wpilib import DoubleSolenoid
 from wpilib.command import Subsystem
 
 class Hatch(Subsystem):
-    """
-    Hatch subsystem. This is a pneumatic hatch subsytstem, Implemented with
-    a double solenoid to operate the intake and placement of the hatch panel.
-    """
+    """Hatch subsystem. This is a pneumatic hatch subsytstem, Implemented
+    with a double solenoid to operate the intake and placement of the
+    hatch panel."""
     def __init__(self):
         super().__init__()
 

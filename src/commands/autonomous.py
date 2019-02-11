@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+'''Make the robot drive by itself.'''
+
 from wpilib.command import CommandGroup
 
 #from .close_claw import CloseClaw
@@ -10,12 +13,11 @@ from wpilib.command import CommandGroup
 
 
 class Autonomous(CommandGroup):
-    """
-    The main autonomous command to pickup and deliver the
-    soda to the box
-    """
+    '''The main autonomous command to pickup and deliver the
+    soda to the box.'''
 
     def __init__(self, robot):
+        '''Do it all.'''
         super().__init__()
 
         #self.addSequential(PrepareToPickup(robot))
