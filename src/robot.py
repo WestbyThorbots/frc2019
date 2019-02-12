@@ -9,6 +9,7 @@ from subsystems.drivetrain import DriveTrain
 from subsystems.puncher import Puncher
 from subsystems.claw import Claw
 from subsystems.arm import Arm
+from subsystems.intake import Intake
 from commands.move_arm_with_triggers import MoveArmWithTriggers
 from oi import OI
 
@@ -22,6 +23,7 @@ class MyRobot(CommandBasedRobot):
         self.puncher = Puncher()
         self.claw = Claw()
         self.arm = Arm()
+        self.intake = Intake()
         self.oi = OI(self)
 
     def disabledInit(self):
