@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+'''Operate the robot's drivetrain.'''
+
 import math
 
 import wpilib
@@ -6,14 +9,12 @@ from wpilib import robotdrive
 
 from commands.differentialdrive_with_xbox import DifferentialDriveWithXbox
 
-
 class DriveTrain(Subsystem):
-    """The DriveTrain subsystem incorporates the sensors and actuators attached to
-       the robots chassis. These include two drive motors, a left and right encoder
-       and a gyro.
-    """
+    """Operate the drivetrain."""
 
     def __init__(self, robot):
+        """Save the robot object, and assign and save hardware ports
+        connected to the drive motors."""
         super().__init__()
         self.robot = robot
 
@@ -46,37 +47,37 @@ class DriveTrain(Subsystem):
             self.right_encoder.setDistancePerPulse((4.0 / 12.0 * math.pi) / 360.0)
 
     def initDefaultCommand(self):
-        """
-            When no other command is running let the operator drive around
-            using the first (0) Xbox Controller
-        """
+        """Do this when no other command is running.
+        Let the operator drive around using the assigned Xbox Controller."""
         self.setDefaultCommand(DifferentialDriveWithXbox(self.robot))
 
     def driveManual(self, left, right):
-        """ Tank style driving for the DriveTrain.
+        """Tank style driving for the DriveTrain.
 
-            :param left: Speed in range [-1, 1]
-            :param right: Speed in range [-1, 1]
+           :param left: Speed in range [-1, 1]
+           :param right: Speed in range [-1, 1]
         """
         self.drive.arcadeDrive(left, right)
 
     def driveXbox0(self, controller):
-        #:param joy: The ps3 style joystick to use to drive tank style
-        # self.driveManual(-joy.getY(), -joy.getAxis(wpilib.Joystick.AxisType.kThrottle))
+        """What is the differenct between this and :meth:`driveManual` above?
+           :param joy: The ps3 style joystick to use to drive tank style"""
+
         self.driveManual(controller.getY(0), -controller.getX(0))
 
     def getHeading(self):
-        # :returns: The robots heading in degrees
+        """Get the robot's heading in degrees"""
         return self.gyro.getAngle()
 
     def reset(self):
-        #Reset the robots sensors to the zero states
+        """Reset the robots sensors to the zero states."""
         self.gyro.reset()
         self.left_encoder.reset()
         self.right_encoder.reset()
 
     def getDistance(self):
-        # :returns: The distance driven (average of left and right encoders)
+        """Get the current distance driven.
+        :returns: The distance driven (average of left and right encoders)"""
         return (
             self.left_encoder.getDistance().__init__()
         ) / 2.0

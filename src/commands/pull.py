@@ -1,9 +1,12 @@
-#!/usr/bin/python3
-import wpilib
+#!/usr/bin/env python3
+'''Pull something.'''
+
 from wpilib.command import Command
 
 class Pull(Command):
+    '''Pull something.'''
     def __init__(self, robot):
+        '''Save the robot object and pull in the puncher subsystem.'''
         super().__init__()
 
         self.robot = robot
@@ -22,8 +25,8 @@ class Pull(Command):
         print("Pull:execute")
 
     def isFinished(self):
-        '''Make this return true when this Command no longer needs to run execute()
-        '''
+        '''Make this return true when this Command no longer needs to
+        run execute()'''
         print("Pull:isFinished")
         return self.isTimedOut()
 
@@ -34,7 +37,6 @@ class Pull(Command):
         print("Pull:end")
 
     def interrupted(self):
-        '''Called when another Command which requires one or more of the same
-        subsystems is scheduled to run
-        '''
+        '''Called when another Command which requires one or more of
+        the same subsystems is scheduled to run.'''
         self.end()

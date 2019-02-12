@@ -1,9 +1,12 @@
-#!/usr/bin/python3
-import wpilib
+#!/usr/bin/env python3
+'''Move the arm.'''
+
 from wpilib.command import Command
 
 class MoveArmWithTriggers(Command):
+    '''Move the arm.'''
     def __init__(self, robot):
+        '''Save the robot object, and pull in the arm subsystem.'''
         super().__init__()
 
         self.robot = robot
