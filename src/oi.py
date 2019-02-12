@@ -8,6 +8,7 @@ from commands.pull import Pull
 from commands.open_claw import OpenClaw
 from commands.close_claw import CloseClaw
 from commands.move_arm_with_triggers import MoveArmWithTriggers
+from commands.intake_cargo import IntakeCargo
 
 from wpilib.buttons import JoystickButton
 from wpilib import XboxController
@@ -30,11 +31,14 @@ class OI:
 
         punch = JoystickButton(self.xbox0, XboxController.Button.kA)
         claw = JoystickButton(self.xbox0, XboxController.Button.kB)
+        intake = JoystickButton(self.xbox0, XboxController.Button.kX)
 
         triggerbutton = TriggerButton(self.xbox0, .1)
 
         punch.whenPressed(Punch(robot))
         punch.whenReleased(Pull(robot))
+
+        intake.whileHeld(IntakeCargo(robot))
 
         triggerbutton.whenPressed(MoveArmWithTriggers(robot))
 
