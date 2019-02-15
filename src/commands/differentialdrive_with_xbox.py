@@ -2,6 +2,7 @@
 '''Drive differentially with an Xbox controller.'''
 
 from wpilib.command import Command
+from wpilib.xboxcontroller import XboxController
 
 class DifferentialDriveWithXbox(Command):
     '''Drive differentially with an Xbox controller.'''
@@ -17,7 +18,7 @@ class DifferentialDriveWithXbox(Command):
 
     def execute(self):
         """Called repeatedly when this Command is scheduled to run."""
-        self.robot.drivetrain.driveXbox0(self.robot.oi.getXbox0())
+        self.robot.drivetrain.driveManual(self.robot.xbox0.getY(0), -self.robot.xbox0.getX(0))
 
     def isFinished(self):
         """Make this return true when this Command no longer needs to
@@ -32,4 +33,3 @@ class DifferentialDriveWithXbox(Command):
         """Called when another command which requires one or more of
         the same subsystems is scheduled to run"""
         self.end()
-
