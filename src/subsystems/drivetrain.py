@@ -59,12 +59,6 @@ class DriveTrain(Subsystem):
         """
         self.drive.arcadeDrive(left, right)
 
-    def driveXbox0(self, controller):
-        """What is the differenct between this and :meth:`driveManual` above?
-           :param joy: The ps3 style joystick to use to drive tank style"""
-
-        self.driveManual(controller.getY(0), -controller.getX(0))
-
     def getHeading(self):
         """Get the robot's heading in degrees"""
         return self.gyro.getAngle()

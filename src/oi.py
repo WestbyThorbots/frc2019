@@ -13,8 +13,6 @@ from commands.intake_cargo import IntakeCargo
 from wpilib.buttons import JoystickButton
 from wpilib import XboxController
 import wpilib
-from wpilib.interfaces.generichid import GenericHID
-from wpilib import Timer
 from thresholds import TriggerButton
 
 class OI:
@@ -27,13 +25,13 @@ class OI:
 
         print("In OI:__init__")
 
-        self.xbox0 = wpilib.XboxController(0)
+        robot.xbox0 = wpilib.XboxController(0)
 
-        punch = JoystickButton(self.xbox0, XboxController.Button.kA)
-        claw = JoystickButton(self.xbox0, XboxController.Button.kB)
-        intake = JoystickButton(self.xbox0, XboxController.Button.kX)
+        punch = JoystickButton(robot.xbox0, XboxController.Button.kA)
+        claw = JoystickButton(robot.xbox0, XboxController.Button.kB)
+        intake = JoystickButton(robot.xbox0, XboxController.Button.kX)
 
-        triggerbutton = TriggerButton(self.xbox0, .1)
+        triggerbutton = TriggerButton(robot.xbox0, .1)
 
         punch.whenPressed(Punch(robot))
         punch.whenReleased(Pull(robot))
@@ -43,8 +41,3 @@ class OI:
         triggerbutton.whenPressed(MoveArmWithTriggers(robot))
 
         claw.toggleWhenPressed(OpenClaw(robot))
-
-    def getXbox0(self):
-        '''Return the first Xbox controller connected to the system.
-        '''
-        return self.xbox0

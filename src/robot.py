@@ -10,7 +10,6 @@ from subsystems.puncher import Puncher
 from subsystems.claw import Claw
 from subsystems.arm import Arm
 from subsystems.intake import Intake
-from commands.move_arm_with_triggers import MoveArmWithTriggers
 from oi import OI
 
 class MyRobot(CommandBasedRobot):
@@ -28,7 +27,6 @@ class MyRobot(CommandBasedRobot):
 
     def disabledInit(self):
         '''Initialize systems when entering Disabled Mode.'''
-        return super().disabledInit()
 
     def disabledPeriodic(self):
         '''Called approximately every 20ms while in Disabled Mode.'''
@@ -36,15 +34,13 @@ class MyRobot(CommandBasedRobot):
 
     def autonomousInit(self):
         '''Initialize systems when entering Autonomous Mode.'''
-        return super().autonomousInit()
 
     def autonomousPeriodic(self):
         '''Called approximately every 20ms while in Autonomous Mode.'''
-        Scheduler.getInstance().run()    
+        Scheduler.getInstance().run()
 
     def teleopInit(self):
         '''Initialize systems when entering Teleoperated Mode.'''
-        return super().teleopInit()
 
     def teleopPeriodic(self):
         '''Called approximately every 20ms while in Teleoperated Mode.'''
@@ -52,7 +48,6 @@ class MyRobot(CommandBasedRobot):
 
     def testInit(self):
         '''Initialize systems when entering Test Mode.'''
-        return super().testInit()
 
     def testPeriodic(self):
         '''Called approximately every 20ms while in Test Mode.'''
