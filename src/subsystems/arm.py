@@ -3,9 +3,6 @@
 
 import wpilib
 from wpilib.command import Subsystem
-from commands.move_arm_with_triggers import MoveArmWithTriggers
-from wpilib import XboxController
-from wpilib.interfaces.generichid import GenericHID
 from wpilib import Encoder
 
 class Arm(Subsystem):
@@ -14,24 +11,23 @@ class Arm(Subsystem):
         """Assign ports and save them for use in the move and stop methods."""
         super().__init__()
 
-        self.xbox0 = XboxController(0)
         self.arm = wpilib.VictorSP(2)
         self.armencoder = Encoder(6, 5)
         self.armencoder.setDistancePerPulse(0.14)
 
-    def move(self):
+    def move(self, value):
         """Move the arm according to the left and right Xbox
         controller triggers."""
         if self.armencoder.getDistance() < 40:
-            self.arm.set(self.xbox0.getTriggerAxis(GenericHID.Hand.kLeft) +
-                self.xbox0.getTriggerAxis(GenericHID.Hand.kRight)*-1)
-            print(self.xbox0.getTriggerAxis(GenericHID.Hand.kLeft))
-            print (self.xbox0.getTriggerAxis(GenericHID.Hand.kRight))
-        else:
-            self.arm.set(self.xbox0.getTriggerAxis(GenericHID.Hand.kLeft))
-            print (self.xbox0.getTriggerAxis(GenericHID.Hand.kLeft))
+            self.arm.set(value)
+            if value > 0:
+                direction = "up"
+            elif value < 0:
+                direction = "down"
+            else:
+                direction = "stopped"
+            print("Arm moving", direction, "at", value)
 
-        
         print ("Arm angle is " + "%3f" % self.armencoder.getDistance())
 
     def stop(self):
