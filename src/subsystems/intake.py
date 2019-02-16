@@ -16,7 +16,7 @@ class Intake(Subsystem):
 
     def spin(self):
         """Spin the intake motors."""
-        self.intake.set(1.0)
+        self.intake.set(.5)
 
     def stop(self):
         """Stop the intake motors."""

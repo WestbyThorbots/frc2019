@@ -14,11 +14,11 @@ class LiftWinch(Command):
 
     def initialize(self):
         """Called just before this Command runs the first time"""
-        self.robot.intake.lift()
+        self.robot.intake_winch.lift()
 
     def execute(self):
         """Called repeatedly when this Command is scheduled to run."""
-        self.robot.intake.lift()
+        self.robot.intake_winch.lift()
 
     def isFinished(self):
         """Make this return true when this Command no longer needs to

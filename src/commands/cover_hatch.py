@@ -14,11 +14,11 @@ class CoverHatch(Command):
 
     def initialize(self):
         """Called just before this Command runs the first time"""
-        self.robot.hatch.open
+        self.robot.hatch.open()
 
     def execute(self):
         """Called repeatedly when this Command is scheduled to run."""
-        self.robot.hatch.open
+        pass
 
     def isFinished(self):
         """Make this return true when this Command no longer needs to
