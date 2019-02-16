@@ -17,26 +17,25 @@ class MoveArmWithTriggers(Command):
 
     def initialize(self):
         #Called just before this Command runs the first time
-        print("arm initialize")
+        pass
+        
 
     def execute(self):
         #Called repeatedly when this Command is scheduled to run
         self.robot.arm.move(self.xbox0.getTriggerAxis(GenericHID.Hand.kLeft) +
-                            self.xbox0.getTriggerAxis(GenericHID.Hand.kRight)*-1)
-        print("arm execute")
+            self.xbox0.getTriggerAxis(GenericHID.Hand.kRight)*-1)
 
     def isFinished(self):
         #Make this return true when this Command no longer needs to run execute()
-        print("arm isFinished")
         return self.isTimedOut()
 
     def end(self):
         #Called once after isFinished returns true
-        print("arm end")
+        pass
 
     def interrupted(self):
         '''Called when another Command which requires one or more of the same
         subsystems is scheduled to run
         '''
-        print("arm interrupted")
+        pass
         self.end()

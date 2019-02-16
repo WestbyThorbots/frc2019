@@ -81,4 +81,3 @@ class OI:
         hatch.toggleWhenPressed(CoverHatch(robot))
         liftwinch.whileHeld(LiftWinch(robot))
         lowerwinch.whileHeld(LowerWinch(robot))
-        intake.toggleWhenPressed(IntakeCargo(robot))

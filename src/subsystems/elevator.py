@@ -21,16 +21,18 @@ class Elevator(Subsystem):
     def LiftFront(self):
         '''Lift the front of the robot.'''
         #if self.FrontElevator1.getQuadraturePostion()>4:
-        self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
+        #self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
         self.FrontElevator1.set(1.0)
+        self.FrontElevator2.set(0.9)
         #else:
         #self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
         #self.FrontElevator1.set(0.0)
 
     def LowerFront(self):
         '''Lower the front of the robot.'''
-        self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
+        #self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
         self.FrontElevator1.set(-1.0)
+        self.FrontElevator2.set(-.9)
 
     def StopFront(self):
         '''Stop the front screwjacks.'''
