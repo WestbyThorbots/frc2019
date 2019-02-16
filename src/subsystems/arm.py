@@ -4,6 +4,7 @@
 import wpilib
 from wpilib.command import Subsystem
 from wpilib import Encoder
+import ctre
 
 class Arm(Subsystem):
     """Raise and lower the robot's arm."""
@@ -11,8 +12,8 @@ class Arm(Subsystem):
         """Assign ports and save them for use in the move and stop methods."""
         super().__init__()
 
-        self.arm = wpilib.VictorSP(2)
-        self.armencoder = Encoder(6, 5)
+        self.arm = ctre.WPI_TalonSRX(11)
+        self.armencoder = Encoder(0, 1)
         self.armencoder.setDistancePerPulse(0.14)
 
     def move(self, value):

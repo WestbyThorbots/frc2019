@@ -3,6 +3,7 @@
 
 import wpilib
 from wpilib.command import Subsystem
+import ctre
 
 class Elevator(Subsystem):
     """Elevator uses two motor controllers to control three motors.
@@ -13,20 +14,28 @@ class Elevator(Subsystem):
         screw jacks of the elevator.'''
         super().__init__()
 
-        self.FrontElevator = wpilib.Spark(6)
-        self.RearElevator = wpilib.Spark(7)
+        self.FrontElevator1 = ctre.WPI_TalonSRX(5)
+        self.FrontElevator2 = ctre.WPI_TalonSRX(6)
+        self.RearElevator = ctre.WPI_TalonSRX(10)
 
     def LiftFront(self):
         '''Lift the front of the robot.'''
-        self.FrontElevator.set(1.0)
+        #if self.FrontElevator1.getQuadraturePostion()>4:
+        self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
+        self.FrontElevator1.set(1.0)
+        #else:
+        #self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
+        #self.FrontElevator1.set(0.0)
 
     def LowerFront(self):
         '''Lower the front of the robot.'''
-        self.FrontElevator.set(-1.0)
+        self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
+        self.FrontElevator1.set(-1.0)
 
     def StopFront(self):
         '''Stop the front screwjacks.'''
-        self.FrontElevator.set(0.0)
+        self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
+        self.FrontElevator1.set(0.0)
 
     def LiftRear(self):
         '''Lift the rear of the robot.'''
@@ -54,3 +63,21 @@ class Elevator(Subsystem):
         '''Stop both screw jacks.'''
         self.StopFront()
         self.StopRear()
+
+    def LiftLeft(self):
+        self.FrontElevator1.set(1.0)
+
+    def LowerLeft(self):
+        self.FrontElevator1.set(-1.0)
+
+    def StopLeft(self):
+        self.FrontElevator1.set(0.0)
+
+    def LiftRight(self):
+        self.FrontElevator2.set(1.0)
+
+    def LowerRight(self):
+        self.FrontElevator2.set(-1.0)
+
+    def StopRight(self):
+        self.FrontElevator2.set(0.0)
