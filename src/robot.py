@@ -11,6 +11,10 @@ from subsystems.claw import Claw
 from subsystems.arm import Arm
 from subsystems.intake import Intake
 from oi import OI
+from subsystems.elevator import Elevator
+from subsystems.vision import Vision
+from subsystems.hatch import Hatch
+from subsystems.intake_winch import IntakeWinch
 
 class MyRobot(CommandBasedRobot):
     '''Primary class, the Periodic methods in which are called
@@ -23,6 +27,9 @@ class MyRobot(CommandBasedRobot):
         self.claw = Claw()
         self.arm = Arm()
         self.intake = Intake()
+        self.elevator = Elevator()
+        self.hatch = Hatch()
+        self.intake_winch = IntakeWinch()
         self.oi = OI(self)
 
     def disabledInit(self):

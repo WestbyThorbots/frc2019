@@ -13,7 +13,7 @@ class Puncher(Subsystem):
         """Assign and save the double solenoid assignment for the puncher."""
         super().__init__()
 
-        self.puncher = DoubleSolenoid(0,3,2)
+        self.puncher = DoubleSolenoid(0,6,7)
 
     def open(self):
         """Open (retract) the puncher."""
