@@ -12,6 +12,9 @@ from commands.intake_cargo import IntakeCargo
 from commands.cover_hatch import CoverHatch
 from commands.lift_winch import LiftWinch
 from commands.lower_winch import LowerWinch
+from commands.punch_rear import PunchRear
+from commands.park import Park
+from wpilib.interfaces.generichid import GenericHID
 
 from commands.lift import Lift
 from commands.lower import Lower
@@ -42,7 +45,7 @@ class OI:
         robot.xbox0 = wpilib.XboxController(0)
         robot.xbox1 = wpilib.XboxController(1)
 
-        liftleft = JoystickButton(robot.xbox1, XboxController.Button.kA)
+        """liftleft = JoystickButton(robot.xbox1, XboxController.Button.kA)
         lowerleft = JoystickButton(robot.xbox1, XboxController.Button.kB)
         liftright = JoystickButton(robot.xbox1, XboxController.Button.kX)
         lowerright = JoystickButton(robot.xbox1, XboxController.Button.kY)
@@ -51,18 +54,21 @@ class OI:
         liftrear = JoystickButton(robot.xbox1, XboxController.Button.kBumperRight)
         lowerrear = JoystickButton(robot.xbox1, XboxController.Button.kBumperLeft)
         lift = JoystickButton(robot.xbox1, XboxController.Button.kStart)
-        lower = JoystickButton(robot.xbox1, XboxController.Button.kBack)
+        lower = JoystickButton(robot.xbox1, XboxController.Button.kBack)"""
+
+        punchrear = JoystickButton(robot.xbox1, XboxController.Button.kY)
+        intake = JoystickButton(robot.xbox1, XboxController.Button.kA)
+        liftwinch = JoystickButton(robot.xbox1, XboxController.Button.kBumperRight)
+        lowerwinch = JoystickButton(robot.xbox1, XboxController.Button.kBumperLeft)
+        
         
         triggerbutton = TriggerButton(robot.xbox0, .1)
         punch = JoystickButton(robot.xbox0, XboxController.Button.kY)
         claw = JoystickButton(robot.xbox0, XboxController.Button.kB)
-        intake = JoystickButton(robot.xbox0, XboxController.Button.kA)
         hatch = JoystickButton(robot.xbox0, XboxController.Button.kX)
-        liftwinch = JoystickButton(robot.xbox0, XboxController.Button.kBumperRight)
-        lowerwinch = JoystickButton(robot.xbox0, XboxController.Button.kBumperLeft)
-        intake = JoystickButton(robot.xbox0, XboxController.Button.kA)
+        park = JoystickButton(robot.xbox0, XboxController.Button.kA)
 
-        liftleft.whileHeld(LiftLeft(robot))
+        """liftleft.whileHeld(LiftLeft(robot))
         lowerleft.whileHeld(LowerLeft(robot))
         liftright.whileHeld(LiftRight(robot))
         lowerright.whileHeld(LowerRight(robot))
@@ -71,7 +77,7 @@ class OI:
         liftrear.whileHeld(LiftRear(robot))
         lowerrear.whileHeld(LowerRear(robot))
         lift.whileHeld(Lift(robot))
-        lower.whileHeld(Lower(robot))
+        lower.whileHeld(Lower(robot))"""
 
         triggerbutton.whenPressed(MoveArmWithTriggers(robot))
         intake.toggleWhenPressed(IntakeCargo(robot))
@@ -81,3 +87,5 @@ class OI:
         hatch.toggleWhenPressed(CoverHatch(robot))
         liftwinch.whileHeld(LiftWinch(robot))
         lowerwinch.whileHeld(LowerWinch(robot))
+        punchrear.whileHeld(PunchRear(robot))
+        park.whileHeld(Park(robot))
