@@ -12,8 +12,10 @@ from subsystems.arm import Arm
 from subsystems.intake import Intake
 from oi import OI
 from subsystems.elevator import Elevator
+from wpilib.cameraserver import CameraServer
 from subsystems.hatch import Hatch
 from subsystems.intake_winch import IntakeWinch
+from subsystems.rear_puncher import RearPuncher
 
 class MyRobot(CommandBasedRobot):
     '''Primary class, the Periodic methods in which are called
@@ -29,6 +31,9 @@ class MyRobot(CommandBasedRobot):
         self.elevator = Elevator()
         self.hatch = Hatch()
         self.intake_winch = IntakeWinch()
+        self.camera0=CameraServer.launch()
+        self.rear_puncher = RearPuncher()
+
         self.oi = OI(self)
 
     def disabledInit(self):
