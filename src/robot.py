@@ -12,7 +12,6 @@ from subsystems.arm import Arm
 from subsystems.intake import Intake
 from oi import OI
 from subsystems.elevator import Elevator
-from subsystems.vision import Vision
 from subsystems.hatch import Hatch
 from subsystems.intake_winch import IntakeWinch
 

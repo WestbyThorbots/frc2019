@@ -12,6 +12,8 @@ from commands.intake_cargo import IntakeCargo
 from commands.cover_hatch import CoverHatch
 from commands.lift_winch import LiftWinch
 from commands.lower_winch import LowerWinch
+from commands.release_and_punch import ReleaseAndPunch
+from commands.close_and_pull import CloseAndPull
 
 from commands.lift import Lift
 from commands.lower import Lower
@@ -42,7 +44,9 @@ class OI:
         robot.xbox0 = wpilib.XboxController(0)
         robot.xbox1 = wpilib.XboxController(1)
 
-        liftleft = JoystickButton(robot.xbox1, XboxController.Button.kA)
+        #liftleft = JoystickButton(robot.xbox1, XboxController.Button.kA)
+        release_and_punch = JoystickButton(robot.xbox0, XboxController.Button.kA)
+        close_and_pull = JoystickButton(robot.xbox0, XboxController.Button.kA)
         lowerleft = JoystickButton(robot.xbox1, XboxController.Button.kB)
         liftright = JoystickButton(robot.xbox1, XboxController.Button.kX)
         lowerright = JoystickButton(robot.xbox1, XboxController.Button.kY)
@@ -55,14 +59,14 @@ class OI:
         
         triggerbutton = TriggerButton(robot.xbox0, .1)
         punch = JoystickButton(robot.xbox0, XboxController.Button.kY)
-        claw = JoystickButton(robot.xbox0, XboxController.Button.kB)
-        intake = JoystickButton(robot.xbox0, XboxController.Button.kA)
+        open_claw = JoystickButton(robot.xbox0, XboxController.Button.kB)
+        close_claw = JoystickButton(robot.xbox0, XboxController.Button.kB)
+        #intake = JoystickButton(robot.xbox0, XboxController.Button.kA)
         hatch = JoystickButton(robot.xbox0, XboxController.Button.kX)
         liftwinch = JoystickButton(robot.xbox0, XboxController.Button.kBumperRight)
         lowerwinch = JoystickButton(robot.xbox0, XboxController.Button.kBumperLeft)
-        intake = JoystickButton(robot.xbox0, XboxController.Button.kA)
 
-        liftleft.whileHeld(LiftLeft(robot))
+        #liftleft.whileHeld(LiftLeft(robot))
         lowerleft.whileHeld(LowerLeft(robot))
         liftright.whileHeld(LiftRight(robot))
         lowerright.whileHeld(LowerRight(robot))
@@ -74,10 +78,14 @@ class OI:
         lower.whileHeld(Lower(robot))
 
         triggerbutton.whenPressed(MoveArmWithTriggers(robot))
-        intake.toggleWhenPressed(IntakeCargo(robot))
-        claw.toggleWhenPressed(OpenClaw(robot))
+        #intake.toggleWhenPressed(IntakeCargo(robot))
+        #claw.toggleWhenPressed(OpenClaw(robot))
         punch.whenPressed(Punch(robot))
         punch.whenReleased(Pull(robot))
         hatch.toggleWhenPressed(CoverHatch(robot))
         liftwinch.whileHeld(LiftWinch(robot))
         lowerwinch.whileHeld(LowerWinch(robot))
+        release_and_punch.whileHeld(ReleaseAndPunch(robot))
+        close_and_pull.whenReleased(CloseAndPull(robot))
+        open_claw.whenPressed(OpenClaw(robot))
+        close_claw.whenPressed(CloseClaw(robot))
