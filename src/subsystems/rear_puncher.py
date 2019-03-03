@@ -12,16 +12,16 @@ class RearPuncher(Subsystem):
         """Assign and save the double solenoid assignment for the puncher."""
         super().__init__()
 
-        self.rearpuncher = DoubleSolenoid(0,3,2)
+        self.rear_puncher = DoubleSolenoid(0,4, 5)
 
     def open(self):
         """Open (retract) the puncher."""
-        self.rearpuncher.set(DoubleSolenoid.Value.kReverse)
+        self.rear_puncher.set(DoubleSolenoid.Value.kReverse)
 
     def close(self):
         """Close (extend) the puncher."""
-        self.rearpuncher.set(DoubleSolenoid.Value.kForward)
+        self.rear_puncher.set(DoubleSolenoid.Value.kForward)
 
     def stop(self):
         """Turn off the solenoid."""
-        self.rearpuncher.set(DoubleSolenoid.Value.kOff)
+        self.rear_puncher.set(DoubleSolenoid.Value.kOff)

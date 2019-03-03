@@ -25,6 +25,8 @@ class MoveArmWithTriggers(Command):
         self.robot.arm.move(self.xbox0.getTriggerAxis(GenericHID.Hand.kLeft) +
             self.xbox0.getTriggerAxis(GenericHID.Hand.kRight)*-1)
 
+        print (self.xbox0.getTriggerAxis(GenericHID.Hand.kLeft) + self.xbox0.getTriggerAxis(GenericHID.Hand.kRight)*-1)
+
     def isFinished(self):
         #Make this return true when this Command no longer needs to run execute()
         return self.isTimedOut()
@@ -37,5 +39,4 @@ class MoveArmWithTriggers(Command):
         '''Called when another Command which requires one or more of the same
         subsystems is scheduled to run
         '''
-        pass
         self.end()

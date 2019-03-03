@@ -6,8 +6,6 @@ import math
 import wpilib
 from wpilib.command import Subsystem
 from wpilib import robotdrive
-import ctre
-
 from commands.differentialdrive_with_xbox import DifferentialDriveWithXbox
 
 class DriveTrain(Subsystem):
@@ -23,10 +21,8 @@ class DriveTrain(Subsystem):
         self.gyro = wpilib.ADXRS450_Gyro()
 
         # Motors used for driving
-        self.left = ctre.WPI_TalonSRX(1)
-        self.leftB = ctre.WPI_TalonSRX(2)
-        self.right = ctre.WPI_TalonSRX(3)
-        self.rightB = ctre.WPI_TalonSRX(4)
+        self.right = wpilib.VictorSP(0)
+        self.left = wpilib.VictorSP(1)
 
         # TODO: switch to DifferentialDrive is the main object that deals with driving
         self.drive = wpilib.RobotDrive(self.left, self.right)
@@ -60,8 +56,6 @@ class DriveTrain(Subsystem):
            :param left: Speed in range [-1, 1]
            :param right: Speed in range [-1, 1]
         """
-        self.leftB.follow(self.left, followerType=0)
-        self.rightB.follow(self.right, followerType=0)
 
         self.drive.arcadeDrive(left, right)
 

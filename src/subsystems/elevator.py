@@ -3,7 +3,6 @@
 
 import wpilib
 from wpilib.command import Subsystem
-import ctre
 
 class Elevator(Subsystem):
     """Elevator uses two motor controllers to control three motors.
@@ -14,16 +13,18 @@ class Elevator(Subsystem):
         screw jacks of the elevator.'''
         super().__init__()
 
-        self.FrontElevator1 = ctre.WPI_TalonSRX(5)
-        self.FrontElevator2 = ctre.WPI_TalonSRX(6)
-        self.RearElevator = ctre.WPI_TalonSRX(10)
+        #self.FrontElevator1 = wpilib.VictorSP(5)
+        #self.FrontElevator2 = wpilib.VictorSP(6)
+        #self.RearElevator = wpilib.VictorSP(0)
+
+        self.height = 0
 
     def LiftFront(self):
         '''Lift the front of the robot.'''
         #if self.FrontElevator1.getQuadraturePostion()>4:
         #self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
         self.FrontElevator1.set(1.0)
-        self.FrontElevator2.set(0.9)
+        self.FrontElevator2.set(1.0)
         #else:
         #self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
         #self.FrontElevator1.set(0.0)
@@ -32,11 +33,11 @@ class Elevator(Subsystem):
         '''Lower the front of the robot.'''
         #self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
         self.FrontElevator1.set(-1.0)
-        self.FrontElevator2.set(-.9)
+        self.FrontElevator2.set(-1.0)
 
     def StopFront(self):
         '''Stop the front screwjacks.'''
-        self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
+        #self.FrontElevator2.follow(self.FrontElevator1, followerType=0)
         self.FrontElevator1.set(0.0)
 
     def LiftRear(self):

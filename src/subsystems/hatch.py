@@ -12,7 +12,7 @@ class Hatch(Subsystem):
     def __init__(self):
         super().__init__()
 
-        self.hatch = wpilib.DoubleSolenoid(0,4,5)
+        self.hatch = wpilib.DoubleSolenoid(0,3,2)
 
     def open(self):
         self.hatch.set(DoubleSolenoid.Value.kReverse)

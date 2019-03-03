@@ -3,7 +3,6 @@
 
 import wpilib
 from wpilib.command import Subsystem
-import ctre
 
 class IntakeWinch(Subsystem):
     """Intake uses motor to spin green wheel(s) to snag the cargo (ball)
@@ -12,7 +11,7 @@ class IntakeWinch(Subsystem):
         """Assign and save the motor controller that operates the intake."""
         super().__init__()
 
-        self.intakewinch = ctre.WPI_TalonSRX(9)
+        self.intakewinch = wpilib.VictorSP(7)
 
     def lift(self):
         """Lift the intake wheels"""
