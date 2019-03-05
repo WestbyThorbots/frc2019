@@ -33,9 +33,9 @@ class Park(Command):
 
         heading_error = x
         distance_error = y
-		
+
         if x > 1.0:
-	        self.steering_adjust = heading_error - self.min_aim_command
+            self.steering_adjust = heading_error - self.min_aim_command
         elif x < 1.0:
             self.steering_adjust = self.Aim*heading_error + self.min_aim_command
 
