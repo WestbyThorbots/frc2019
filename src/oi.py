@@ -62,12 +62,13 @@ class OI:
         # lift = JoystickButton(robot.xbox1, XboxController.Button.kStart)
         # lower = JoystickButton(robot.xbox1, XboxController.Button.kBack)
 
+
         punchrear = JoystickButton(robot.xbox1, XboxController.Button.kY)
         intake = JoystickButton(robot.xbox1, XboxController.Button.kA)
         eject = JoystickButton(robot.xbox1, XboxController.Button.kB)
         # liftwinch = JoystickButton(robot.xbox1, XboxController.Button.kBumperRight)
         # lowerwinch = JoystickButton(robot.xbox1, XboxController.Button.kBumperLeft)
-        
+        park = JoystickButton(robot.xbox1, XboxController.Button.kX)
         
         triggerbutton = TriggerButton(robot.xbox0, .1)
         punch = JoystickButton(robot.xbox0, XboxController.Button.kY)
@@ -102,4 +103,4 @@ class OI:
         open_claw.whenPressed(OpenClaw(robot))
         close_claw.whenPressed(CloseClaw(robot))
         punchrear.whileHeld(PunchRear(robot))
-        # park.whileHeld(Park(robot))
+        park.whileHeld(Park(robot))
