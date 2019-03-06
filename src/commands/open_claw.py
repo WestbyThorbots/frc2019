@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 '''Open the claw.'''
 
+import wpilib
 from wpilib.command import Command
 
 class OpenClaw(Command):
@@ -13,30 +14,23 @@ class OpenClaw(Command):
         self.robot = robot
         self.requires(self.robot.claw)
 
-        
-
     def initialize(self):
         """Called just before this Command runs the first time"""
-        print("open_claw:initialize()")
+        self.robot.claw.open()
 
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
-        print("open_claw:execute()")
-        self.robot.claw.open()
 
     def isFinished(self):
         """Make this return true when this Command no longer needs
         to run execute()"""
-        print("open_claw:isFinished()")
-        return True
+        return self.isTimedOut()
 
     def end(self):
         """Called once after isFinished returns true"""
-        print("Open claw ended.")
-        print("open_claw:end()")
+        self.robot.claw.close()
 
     def interrupted(self):
         """Called when another Command which requires one or more
         of the same subsystems is scheduled to run."""
-        print("open_claw:interrupted()")
         self.end()

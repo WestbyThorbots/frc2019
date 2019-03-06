@@ -15,8 +15,12 @@ class Intake(Subsystem):
         self.intake = ctre.WPI_TalonSRX(8)
 
     def spin(self):
-        """Spin the intake motors."""
+        """intake cargo"""
         self.intake.set(.5)
+
+    def eject(self):
+        """eject cargo"""
+        self.intake.set(-.5)
 
     def stop(self):
         """Stop the intake motors."""

@@ -14,26 +14,26 @@ class Punch(Command):
 
     def initialize(self):
         '''Called just before this Command runs the first time.'''
+        self.robot.puncher.open()
         print("Punch:initialize()")
 
     def execute(self):
         '''Called repeatedly when this Command is scheduled to run.'''
-        print("Punch:execute")
         self.robot.puncher.open()
+        #print("Punch:execute")
 
     def isFinished(self):
         '''Make this return true when this Command no longer needs to
         run execute().'''
         print("Punch:isFinished")
-        return True
+        return self.isTimedOut()
 
     def end(self):
         '''Called once after isFinished returns true.'''
+        self.robot.puncher.close()
         print("Punch:end")
-        # self.robot.puncher.close()
 
     def interrupted(self):
         '''Called when another Command which requires one or more of
         the same subsystems is scheduled to run.'''
-        print("Punch:interrupted")
         self.end()

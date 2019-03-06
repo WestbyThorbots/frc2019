@@ -27,23 +27,26 @@ class Park(Command):
         ty = self.table.getEntry("ty")
         ta = self.table.getEntry("ta")
         ts = self.table.getEntry("ts")
+        tv = self.table.getEntry("tv")
 
         x = tx.getDouble(0)
         y = ty.getDouble(0)
+        v = tv.getDouble(0)
 
-        heading_error = x
+        heading_error = -x
         distance_error = y
+		
+        if v:
+            if x > 1.0:
+	            self.steering_adjust = heading_error - self.min_aim_command
+            elif x < 1.0:
+                self.steering_adjust = self.Aim*heading_error + self.min_aim_command
 
-        if x > 1.0:
-            self.steering_adjust = heading_error - self.min_aim_command
-        elif x < 1.0:
-            self.steering_adjust = self.Aim*heading_error + self.min_aim_command
+            distance_adjust = self.Distance * distance_error
 
-        distance_adjust = self.Distance * distance_error
-
-        self.left_command += self.steering_adjust + distance_adjust
-        self.right_command -= self.steering_adjust + distance_adjust
-        self.robot.drivetrain.driveManual(self.left_command, self.right_command)
+            self.left_command += self.steering_adjust + distance_adjust
+            self.right_command -= self.steering_adjust + distance_adjust
+            self.robot.drivetrain.driveManual(self.left_command/2, self.right_command/2)
 
     def isFinished(self):
         """Make this return true when this Command no longer needs to run execute()"""
