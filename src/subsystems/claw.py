@@ -14,7 +14,7 @@ class Claw(Subsystem):
         """Save the double solenoid port assignment to the claw."""
         super().__init__()
 
-        self.claw = wpilib.DoubleSolenoid(0,0,1)
+        self.claw = wpilib.DoubleSolenoid(0,3,2)
 
     def open(self):
         """Open the claw."""

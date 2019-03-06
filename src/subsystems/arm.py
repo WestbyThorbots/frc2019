@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 '''Raise and lower the robot's arm.'''
 
-import wpilib
 from wpilib.command import Subsystem
 from wpilib import Encoder
 import ctre
@@ -14,22 +13,17 @@ class Arm(Subsystem):
 
         self.arm = ctre.WPI_TalonSRX(11)
         self.armencoder = Encoder(0, 1)
-        self.armencoder.setDistancePerPulse(0.14)
+        self.armencoder.setDistancePerPulse(0.07)
 
     def move(self, value):
         """Move the arm according to the left and right Xbox
         controller triggers."""
-        if self.armencoder.getDistance() < 40:
+        if self.armencoder.getDistance() > -120:
             self.arm.set(value)
-            if value > 0:
-                direction = "up"
-            elif value < 0:
-                direction = "down"
-            else:
-                direction = "stopped"
-            print("Arm moving", direction, "at", value)
+        else:
+            self.arm.set(0.05)
 
-        print ("Arm angle is " + "%3f" % self.armencoder.getDistance())
+        print("Arm angle is " + "%3f" % self.armencoder.getDistance())
 
     def stop(self):
         """Stop the arm."""

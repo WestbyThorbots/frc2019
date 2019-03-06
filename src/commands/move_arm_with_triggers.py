@@ -18,7 +18,6 @@ class MoveArmWithTriggers(Command):
     def initialize(self):
         #Called just before this Command runs the first time
         pass
-        
 
     def execute(self):
         #Called repeatedly when this Command is scheduled to run
@@ -37,5 +36,4 @@ class MoveArmWithTriggers(Command):
         '''Called when another Command which requires one or more of the same
         subsystems is scheduled to run
         '''
-        pass
         self.end()
