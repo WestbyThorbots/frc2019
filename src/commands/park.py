@@ -37,7 +37,7 @@ class Park(Command):
         y = ty.getDouble(0)
         skew = ts.getDouble(0)
         v = tv.getDouble(0)
-		
+
         if v != 1:
             print("Target Not Detected")
             return
