@@ -3,6 +3,8 @@
 
 import math
 import wpilib
+# from cscore import CameraServer, HttpCamera, UsbCamera
+import cscore
 from commandbased import CommandBasedRobot
 from wpilib.command import Scheduler
 from subsystems.drivetrain import DriveTrain
@@ -32,7 +34,7 @@ class MyRobot(CommandBasedRobot):
         self.elevator = Elevator()
         self.hatch = Hatch()
         self.intake_winch = IntakeWinch()
-        #self.camera0=CameraServer.launch()
+        self.camera0 = CameraServer.launch()
 
         self.oi = OI(self)
 
