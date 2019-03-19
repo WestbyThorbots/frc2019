@@ -15,7 +15,11 @@ def main():
     cs.enableLogging()
 
     usb0 = UsbCamera('Camera 0', 0)
+    usb0.setFPS(10)
+    usb0.setResolution(176, 144)
     usb1 = UsbCamera('Camera 1', 1)
+    usb1.setFPS(10)
+    usb1.setResolution(176, 144)
 
     # We "bounce" between these two camera objects using a Command on
     # the robot.
@@ -25,6 +29,10 @@ def main():
     # and set the source to the first camera (usb0).
     server = cs.addSwitchedCamera('Switched')
     server.setSource(cams[0])
+    server.setFPS(10)
+    server.setCompression(80)
+    server.setResolution(176, 144)
+
 
     def _listener(source, key, value, isNew):
         '''Use networktables to switch the camera source.
@@ -49,9 +57,9 @@ def main():
 if __name__ == '__main__':
 
     # To see messages from networktables, you must setup logging
-    #import logging
+    import logging
 
-    #logging.basicConfig(level=logging.ERROR
+    logging.basicConfig(level=logging.ERROR)
 
     # You should change this to connect to the RoboRIO
     networktables.NetworkTables.initialize(server='10.59.3.2')
