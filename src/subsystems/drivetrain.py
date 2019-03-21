@@ -4,8 +4,10 @@
 import math
 
 import wpilib
+from wpilib import Encoder
 from wpilib.command import Subsystem
 from wpilib import robotdrive
+from wpilib.drive import DifferentialDrive
 from commands.differentialdrive_with_xbox import DifferentialDriveWithXbox
 
 class DriveTrain(Subsystem):
@@ -26,24 +28,14 @@ class DriveTrain(Subsystem):
 
         # TODO: switch to DifferentialDrive is the main object that deals with driving
         self.drive = wpilib.RobotDrive(self.left, self.right)
+        self.auto_drive = wpilib.drive.DifferentialDrive(self.left, self.right)
 
         #TODO: These probably will not be the actual ports used
-        self.left_encoder = wpilib.Encoder(2, 3)
-        self.right_encoder = wpilib.Encoder(4, 5)
-
-        # Encoders may measure differently in the real world and in
-        # simulation. In this example the robot moves 0.042 barleycorns
-        # per tick in the real world, but the simulated encoders
-        # simulate 360 tick encoders. This if statement allows for the
-        # real robot to handle this difference in devices.
-        # TODO: Measure our encoder's distance per pulse
-        if robot.isReal():
-            self.left_encoder.setDistancePerPulse(0.042)
-            self.right_encoder.setDistancePerPulse(0.042)
-        else:
-            # Circumference in ft = 4in/12(in/ft)*PI
-            self.left_encoder.setDistancePerPulse((4.0 / 12.0 * math.pi) / 360.0)
-            self.right_encoder.setDistancePerPulse((4.0 / 12.0 * math.pi) / 360.0)
+        self.left_encoder = Encoder(2, 3)
+        self.right_encoder = Encoder(0, 1)
+        
+        self.left_encoder.setDistancePerPulse(math.pi*16/360/12)
+        self.right_encoder.setDistancePerPulse(math.pi*16/360/12)
 
     def initDefaultCommand(self):
         """Do this when no other command is running.
@@ -58,6 +50,10 @@ class DriveTrain(Subsystem):
         """
 
         self.drive.arcadeDrive(left, right)
+        #print ("gyro is {}".format(self.gyro.getAngle()))
+
+    def driveAuto(self, left, right):
+        self.auto_drive.tankDrive(left, right, True)
 
     def getHeading(self):
         """Get the robot's heading in degrees"""
@@ -72,6 +68,40 @@ class DriveTrain(Subsystem):
     def getDistance(self):
         """Get the current distance driven.
         :returns: The distance driven (average of left and right encoders)"""
-        return (
-            self.left_encoder.getDistance().__init__()
-        ) / 2.0
+        return (self.left_encoder.getDistance() + self.right_encoder.getDistance()) / 2
+
+    def getLeftDistance(self):
+        return (self.left_encoder.getDistance())
+
+    def getRightDistance(self):
+        return (self.right_encoder.getDistance())
+
+    def driveStraight(self, speed):
+        #print ("right encoder is: {} left: {}".format(self.right_encoder.getDistance(),
+        #    self.left_encoder.getDistance()))
+        DistanceDifference = self.getLeftDistance() - self.getRightDistance()
+        #print ("left minus right is{}".format (DistanceDifference))
+        #print ("gyro is {}".format(self.gyro.getAngle()))
+
+        if DistanceDifference > .2:
+            self.driveAuto(speed, 0)
+            #print ("too far to the left")
+        elif DistanceDifference < -.2:
+            self.driveAuto(0, speed)
+            #print ("too far to the right")
+        else:
+            self.driveAuto(-speed, -speed)
+            #print ("going straight")
+        
+    def turn(self, angle, speed):
+        if self.gyro.getAngle() > angle:
+            self.driveAuto(0, speed)
+            print ("I should be turning left, but I'm not.")
+        elif self.gyro.getAngle() < angle:
+            self.driveAuto(speed, 0)
+            print ("I should be turning right, but I'm not.")
+            print ("speed is {}.".format(speed))
+        else:
+            self.driveAuto(0, 0)
+            print ("I should be turning, but I think I'm going straight")
+

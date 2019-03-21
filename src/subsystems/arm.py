@@ -12,7 +12,7 @@ class Arm(Subsystem):
         super().__init__()
 
         self.arm = wpilib.VictorSP(2)
-        self.armencoder = Encoder(0, 1)
+        self.armencoder = Encoder(4, 5)
         self.armencoder.setDistancePerPulse(0.14)
 
     def move(self, value):
