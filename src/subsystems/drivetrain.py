@@ -49,7 +49,7 @@ class DriveTrain(Subsystem):
            :param right: Speed in range [-1, 1]
         """
 
-        self.drive.arcadeDrive(left, right)
+        self.drive.arcadeDrive(left*self.robot.front, right*self.robot.front)
         #print ("gyro is {}".format(self.gyro.getAngle()))
 
     def driveAuto(self, left, right):
@@ -90,9 +90,9 @@ class DriveTrain(Subsystem):
             self.driveAuto(0, speed)
             #print ("too far to the right")
         else:
-            self.driveAuto(-speed, -speed)
+            self.driveAuto(speed, speed)
             #print ("going straight")
-        
+
     def turn(self, angle, speed):
         if self.gyro.getAngle() > angle:
             self.driveAuto(0, speed)

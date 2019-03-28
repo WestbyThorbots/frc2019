@@ -13,6 +13,9 @@ from commands.cover_hatch import CoverHatch
 from commands.lift_winch import LiftWinch
 from commands.lower_winch import LowerWinch
 from commands.punch_rear import PunchRear
+from commands.lift_front import LiftFront
+from commands.lift_rear import LiftRear
+from commands.invert_front import InvertFront
 #from commands.pull_rear import PullRear
 from commands.eject_cargo import EjectCargo
 from commands.park import Park
@@ -49,9 +52,11 @@ class OI:
         lowerwinch = JoystickButton(robot.xbox1, XboxController.Button.kBumperLeft)
         ejectcargo = JoystickButton(robot.xbox1, XboxController.Button.kX)
         park = JoystickButton(robot.xbox1, XboxController.Button.kB)
-        punchrear = JoystickButton(robot.xbox1, XboxController.Button.kY)
+        #lift_front = JoystickButton(robot.xbox1, XboxController.Button.kB)
+        lift_rear = JoystickButton(robot.xbox1, XboxController.Button.kY)
         left = JoystickButton(robot.xbox1, XboxController.Button.kBack)
         right = JoystickButton(robot.xbox1, XboxController.Button.kStart)
+        invertfront = JoystickButton(robot.xbox1, XboxController.Button.kStickRight)
 
         triggerbutton = TriggerButton(robot.xbox0, .1)
         punch = JoystickButton(robot.xbox0, XboxController.Button.kY)
@@ -69,10 +74,13 @@ class OI:
         hatch.toggleWhenPressed(CoverHatch(robot))
         liftwinch.whileHeld(LiftWinch(robot))
         lowerwinch.whileHeld(LowerWinch(robot))
-        punchrear.whenPressed(PunchRear(robot))
+        #punchrear.whenPressed(PunchRear(robot))
         #punchrear.whenReleased(PullRear(robot))
-        park.toggleWhenPressed(Park(robot))
+        park.whileHeld(Park(robot))
         camera.whenPressed(ToggleCamera(robot))
         left.whileHeld(Left(robot))
         right.whileHeld(Right(robot))
+        invertfront.toggleWhenPressed(InvertFront(robot))
+        #lift_front.whileHeld(LiftFront(robot))
+        lift_rear.whileHeld(LiftRear(robot))
         #park.whileHeld(Park(robot))

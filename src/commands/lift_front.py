@@ -7,11 +7,11 @@ class LiftFront(Command):
         super().__init__()
 
         self.robot = robot
-        self.requires(self.robot.elevator)
+        self.requires(self.robot.lift)
 
     def initialize(self):
         """Called just before this Command runs the first time"""
-        self.robot.elevator.LiftFront()
+        self.robot.lift.liftFront()
 
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
@@ -22,7 +22,7 @@ class LiftFront(Command):
 
     def end(self):
         """Called once after isFinished returns true"""
-        self.robot.elevator.StopFront()
+        self.robot.lift.lowerFront()
 
     def interrupted(self):
         """Called when another Command which requires one or more of the same
