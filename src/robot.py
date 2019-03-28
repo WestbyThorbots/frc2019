@@ -10,8 +10,8 @@ from subsystems.puncher import Puncher
 from subsystems.claw import Claw
 from subsystems.arm import Arm
 from subsystems.intake import Intake
+from subsystems.lift import Lift
 from oi import OI
-from subsystems.elevator import Elevator
 from wpilib.cameraserver import CameraServer
 from subsystems.hatch import Hatch
 from subsystems.intake_winch import IntakeWinch
@@ -28,7 +28,9 @@ class MyRobot(CommandBasedRobot):
         self.claw = Claw()
         self.arm = Arm()
         self.intake = Intake()
-        self.elevator = Elevator()
+        self.lift = Lift()
+        self.front = -1
+        #self.elevator = Elevator()
         self.hatch = Hatch()
         self.intake_winch = IntakeWinch()
         self.camera0=CameraServer.launch()
@@ -56,6 +58,7 @@ class MyRobot(CommandBasedRobot):
     def teleopPeriodic(self):
         '''Called approximately every 20ms while in Teleoperated Mode.'''
         Scheduler.getInstance().run()
+
 
     def testInit(self):
         '''Initialize systems when entering Test Mode.'''

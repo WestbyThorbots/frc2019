@@ -41,28 +41,37 @@ class Park(Command):
         if v != 1:
             print("Target Not Detected")
             return
-        # When the
         if x > 0:
             right_speed = -0.5
+            left_speed = 0.5
+            print ("target is to the right")
 
         elif x < 0:
             left_speed = -0.5
+            right_speed = 0.5
+            print ("target is to the left")
 
         else:
-            if y > 0:
-                right_speed = -0.5
-                left_speed = -0.5
+            left_speed = 0.5
+            right_speed = 0.5
+        """
+        if y > 0:
+            right_speed += -0.5
+            left_speed += -0.5
+            print ("target is far")
 
-            elif y < 0:
-                right_speed = 0.5
-                left_speed = 0.5
+        elif y < 0:
+            right_speed += 0.5
+            left_speed += 0.5
+            print ("target is near")
 
-            else:
-                right_speed = 0
-                left_speed = 0
+        else:
+            right_speed = 0
+            left_speed = 0
+        """
 
         print("left: %1.2f" % left_speed, "right: %1.2f" % right_speed)
-        self.robot.drivetrain.driveManual(left_speed, right_speed)
+        self.robot.drivetrain.driveManual(-left_speed, -right_speed)
 
     def isFinished(self):
         """Make this return true when this Command no longer needs to run execute()"""
