@@ -12,6 +12,8 @@ from commands.lift_winch import LiftWinch
 from commands.lower_winch import LowerWinch
 from commands.punch_rear import PunchRear
 from commands.pull_rear import PullRear
+from commands.lift_rear import LiftRear
+from commands.lower_rear import LowerRear
 from commands.invert_front import InvertFront
 from commands.eject_cargo import EjectCargo
 from wpilib.interfaces.generichid import GenericHID
@@ -35,7 +37,9 @@ class OI:
         robot.xbox1 = wpilib.XboxController(1)
 
         triggerbutton = TriggerButton(robot.xbox0, .1)
+        # punch is actually front pneumatic lift
         punch = JoystickButton(robot.xbox0, XboxController.Button.kY)
+        rearlift = JoystickButton(robot.xbox0, XboxController.Button.kB)
         hatch = JoystickButton(robot.xbox0, XboxController.Button.kX)
 
         intake = JoystickButton(robot.xbox1, XboxController.Button.kA)
@@ -50,6 +54,8 @@ class OI:
         ejectcargo.toggleWhenPressed(EjectCargo(robot))
         punch.whenPressed(Punch(robot))
         punch.whenReleased(Pull(robot))
+        rearlift.whenPressed(LiftRear(robot))
+        rearlift.whenReleased(LowerRear(robot))
         hatch.toggleWhenPressed(CoverHatch(robot))
         liftwinch.whileHeld(LiftWinch(robot))
         lowerwinch.whileHeld(LowerWinch(robot))
