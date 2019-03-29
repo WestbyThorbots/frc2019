@@ -23,7 +23,7 @@ class Arm(Subsystem):
         else:
             self.arm.set(0.05)
 
-        print("Arm angle is " + "%3f" % self.armencoder.getDistance())
+        #print("Arm angle is " + "%3f" % self.armencoder.getDistance())
 
     def stop(self):
         """Stop the arm."""
