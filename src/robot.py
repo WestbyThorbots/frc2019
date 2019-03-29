@@ -1,20 +1,20 @@
 #!/usr/bin/python3
 '''robot.py: The "main" line of the code.'''
 
-import math
 import wpilib
 from commandbased import CommandBasedRobot
 from wpilib.command import Scheduler
-from subsystems.drivetrain import DriveTrain
-from subsystems.puncher import Puncher
-from subsystems.claw import Claw
-from subsystems.arm import Arm
-from subsystems.intake import Intake
-from subsystems.lift import Lift
+
 from oi import OI
-from wpilib.cameraserver import CameraServer
+
+from subsystems.arm import Arm
+from subsystems.drivetrain import DriveTrain
 from subsystems.hatch import Hatch
+from subsystems.intake import Intake
 from subsystems.intake_winch import IntakeWinch
+from subsystems.lift import Lift
+from subsystems.limelight import LimeLight
+from subsystems.puncher import Puncher
 from subsystems.rear_puncher import RearPuncher
 
 class MyRobot(CommandBasedRobot):
@@ -23,34 +23,19 @@ class MyRobot(CommandBasedRobot):
 
     def robotInit(self):
         '''Initialize all subsystems.'''
-        self.drivetrain = DriveTrain(self)
-        self.puncher = Puncher()
-        self.claw = Claw()
         self.arm = Arm()
-        self.intake = Intake()
-        self.lift = Lift()
-        self.front = -1
-        #self.elevator = Elevator()
+        self.drivetrain = DriveTrain(self)
         self.hatch = Hatch()
+        self.intake = Intake()
         self.intake_winch = IntakeWinch()
-        self.camera0=CameraServer.launch()
+        self.lift = Lift()
+        self.limelight = LimeLight()
+        self.puncher = Puncher()
         self.rear_puncher = RearPuncher()
 
+        self.front = -1
+
         self.oi = OI(self)
-
-    def disabledInit(self):
-        '''Initialize systems when entering Disabled Mode.'''
-
-    def disabledPeriodic(self):
-        '''Called approximately every 20ms while in Disabled Mode.'''
-        return super().disabledPeriodic()
-
-    def autonomousInit(self):
-        '''Initialize systems when entering Autonomous Mode.'''
-
-    def autonomousPeriodic(self):
-        '''Called approximately every 20ms while in Autonomous Mode.'''
-        Scheduler.getInstance().run()
 
     def teleopInit(self):
         '''Initialize systems when entering Teleoperated Mode.'''
@@ -58,7 +43,6 @@ class MyRobot(CommandBasedRobot):
     def teleopPeriodic(self):
         '''Called approximately every 20ms while in Teleoperated Mode.'''
         Scheduler.getInstance().run()
-
 
     def testInit(self):
         '''Initialize systems when entering Test Mode.'''
@@ -68,5 +52,6 @@ class MyRobot(CommandBasedRobot):
         Scheduler.getInstance().run()
 
 if __name__ == "__main__":
-    '''Kick off the robot code.'''
+    '''Kick off the robot code.
+    '''
     wpilib.run(MyRobot)
