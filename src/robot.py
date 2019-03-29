@@ -3,21 +3,18 @@
 
 import math
 import wpilib
-# from cscore import CameraServer, HttpCamera, UsbCamera
-import cscore
 from commandbased import CommandBasedRobot
 from wpilib.command import Scheduler
 from subsystems.drivetrain import DriveTrain
 from subsystems.puncher import Puncher
 from subsystems.rear_puncher import RearPuncher
-from subsystems.claw import Claw
 from subsystems.arm import Arm
 from subsystems.intake import Intake
 from oi import OI
 from subsystems.elevator import Elevator
-from wpilib.cameraserver import CameraServer
 from subsystems.hatch import Hatch
 from subsystems.intake_winch import IntakeWinch
+from subsystems.rear_lift import RearLift
 
 class MyRobot(CommandBasedRobot):
     '''Primary class, the Periodic methods in which are called
@@ -28,13 +25,15 @@ class MyRobot(CommandBasedRobot):
         self.drivetrain = DriveTrain(self)
         self.puncher = Puncher()
         self.rear_puncher = RearPuncher()
-        self.claw = Claw()
         self.arm = Arm()
         self.intake = Intake()
         self.elevator = Elevator()
         self.hatch = Hatch()
         self.intake_winch = IntakeWinch()
-        self.camera0 = CameraServer.launch()
+        self.rear_lift = RearLift()
+
+        # The "front" of the robot (which end is facing forward)
+        self.front = -1
 
         self.oi = OI(self)
 
