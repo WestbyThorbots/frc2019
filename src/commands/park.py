@@ -41,19 +41,19 @@ class Park(Command):
         if v != 1:
             print("Target Not Detected")
             return
-        if x > 0:
-            right_speed = -0.5
-            left_speed = 0.5
+        if x > 7:
+            right_speed = 0.5
+            left_speed = -0.5
             print ("target is to the right")
 
-        elif x < 0:
-            left_speed = -0.5
-            right_speed = 0.5
+        elif x < -7:
+            left_speed = 0.5
+            right_speed = -0.5
             print ("target is to the left")
 
         else:
-            left_speed = 0.5
-            right_speed = 0.5
+            left_speed = 0.7
+            right_speed = 0.7
         """
         if y > 0:
             right_speed += -0.5

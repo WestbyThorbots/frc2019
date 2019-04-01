@@ -17,7 +17,7 @@ class Right(CommandGroup):
         super().__init__()
         self.addSequential(InvertFront(robot))
         self.addSequential(DriveStraight(robot, 10, .5))
-        self.addSequential(Turn(robot, 90, .75))
+        self.addSequential(Turn(robot, -90, .75))
         self.addSequential(LimeLightLEDon(robot))
         self.addSequential(Park(robot))
         self.addSequential(LimeLightLEDblink(robot))

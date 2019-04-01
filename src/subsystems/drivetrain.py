@@ -30,6 +30,8 @@ class DriveTrain(Subsystem):
         self.drive = wpilib.RobotDrive(self.left, self.right)
         self.auto_drive = wpilib.drive.DifferentialDrive(self.left, self.right)
 
+        self.turn_complete = False
+
         #TODO: These probably will not be the actual ports used
         self.left_encoder = Encoder(2, 3)
         self.right_encoder = Encoder(0, 1)
@@ -53,11 +55,16 @@ class DriveTrain(Subsystem):
         #print ("gyro is {}".format(self.gyro.getAngle()))
 
     def driveAuto(self, left, right):
-        self.auto_drive.tankDrive(left, right, True)
+        self.auto_drive.tankDrive(left*self.robot.front, right*self.robot.front, True)
 
     def getHeading(self):
         """Get the robot's heading in degrees"""
-        return self.gyro.getAngle()
+        raw = self.gyro.getAngle()
+        print ("Compass heading is {}, raw angle is{}".format (int (raw) % 360, raw))
+        if raw >= 0:
+            return int(raw) % 360
+        else:
+            return -(int(raw) % 360)
 
     def reset(self):
         """Reset the robots sensors to the zero states."""
@@ -94,14 +101,11 @@ class DriveTrain(Subsystem):
             #print ("going straight")
 
     def turn(self, angle, speed):
-        if self.gyro.getAngle() > angle:
-            self.driveAuto(0, speed)
-            print ("I should be turning left, but I'm not.")
-        elif self.gyro.getAngle() < angle:
-            self.driveAuto(speed, 0)
-            print ("I should be turning right, but I'm not.")
+        if self.getHeading() > angle +10:
+            self.driveAuto(speed, -speed)
+        elif self.getHeading() < angle -10:
+            self.driveAuto(-speed, speed)
             print ("speed is {}.".format(speed))
         else:
             self.driveAuto(0, 0)
-            print ("I should be turning, but I think I'm going straight")
-
+            self.turn_complete = True
