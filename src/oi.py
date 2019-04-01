@@ -6,6 +6,7 @@ do what we want it to do.
 from commands.punch import Punch
 from commands.pull import Pull
 from commands.move_arm_with_triggers import MoveArmWithTriggers
+from commands.toggle_camera import ToggleCamera
 from commands.intake_cargo import IntakeCargo
 from commands.cover_hatch import CoverHatch
 from commands.lift_winch import LiftWinch
@@ -14,6 +15,7 @@ from commands.punch_rear import PunchRear
 from commands.pull_rear import PullRear
 from commands.lift_rear import LiftRear
 from commands.lower_rear import LowerRear
+from commmands.park import Park
 from commands.invert_front import InvertFront
 from commands.eject_cargo import EjectCargo
 from wpilib.interfaces.generichid import GenericHID
@@ -41,6 +43,7 @@ class OI:
         punch = JoystickButton(robot.xbox0, XboxController.Button.kY)
         rearlift = JoystickButton(robot.xbox0, XboxController.Button.kB)
         hatch = JoystickButton(robot.xbox0, XboxController.Button.kX)
+        togglecamera = JoystickButton(robot.xbox0, XboxController.Button.kStart)
 
         intake = JoystickButton(robot.xbox1, XboxController.Button.kA)
         liftwinch = JoystickButton(robot.xbox1, XboxController.Button.kBumperRight)
@@ -48,6 +51,7 @@ class OI:
         ejectcargo = JoystickButton(robot.xbox1, XboxController.Button.kX)
         invertfront = JoystickButton(robot.xbox1, XboxController.Button.kStickRight)
         punchrear = JoystickButton(robot.xbox1, XboxController.Button.kY)
+        park = JoystickButton(robot.xbox0, XboxController.Button.kBack)
 
         triggerbutton.whenPressed(MoveArmWithTriggers(robot))
         intake.toggleWhenPressed(IntakeCargo(robot))
@@ -62,3 +66,5 @@ class OI:
         punchrear.whenPressed(PunchRear(robot))
         punchrear.whenReleased(PullRear(robot))
         invertfront.toggleWhenPressed(InvertFront(robot))
+        togglecamera.whenPressed(ToggleCamera(robot))
+        park.whileHeld(Park(robot))
