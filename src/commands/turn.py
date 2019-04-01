@@ -27,7 +27,8 @@ class Turn(Command):
 
     def isFinished(self):
         #Make this return true when this Command no longer needs to run execute()
-        return self.isTimedOut()
+        return self.robot.drivetrain.turn_complete
+
 
     def end(self):
         #Called once after isFinished returns true
