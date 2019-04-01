@@ -12,41 +12,51 @@ class Park(Command):
 
         NetworkTables.initialize(server='10.59.3.2')
         self.table = NetworkTables.getDefault().getTable("limelight")
-        self.Distance = -0.1
-        self.Aim = -0.1
+        self.Distance = 0.1
+        self.Aim = 0.1
         self.min_aim_command = 0.05
         self.steering_adjust = 0.0
-        self.left_command = 0.0
-        self.right_command = 0.0
 
     def initialize(self):
         pass
 
     def execute(self):
+        left_speed = 0.0
+        right_speed = 0.0
+
+        # tx is Horizontal Offset From Crosshair To Target (-27 degrees to 27 degrees)
         tx = self.table.getEntry("tx")
+        # Vertical Offset From Crosshair To Target (-20.5 degrees to 20.5 degrees)
         ty = self.table.getEntry("ty")
-        ta = self.table.getEntry("ta")
+        # Skew or rotation (-90 degrees to 0 degrees)
         ts = self.table.getEntry("ts")
+        # tv sees if the limelight has a valid target (0 or 1).
         tv = self.table.getEntry("tv")
 
         x = tx.getDouble(0)
         y = ty.getDouble(0)
+        skew = ts.getDouble(0)
         v = tv.getDouble(0)
 
-        heading_error = -x
-        distance_error = y
-		
-        if v:
-            if x > 1.0:
-	            self.steering_adjust = heading_error - self.min_aim_command
-            elif x < 1.0:
-                self.steering_adjust = self.Aim*heading_error + self.min_aim_command
+        if v != 1:
+            print("Target Not Detected")
+            return
+        if x > 7:
+            right_speed = 0.5
+            left_speed = -0.5
+            print ("target is to the right")
 
-            distance_adjust = self.Distance * distance_error
+        elif x < -7:
+            left_speed = 0.5
+            right_speed = -0.5
+            print ("target is to the left")
 
-            self.left_command += self.steering_adjust + distance_adjust
-            self.right_command -= self.steering_adjust + distance_adjust
-            self.robot.drivetrain.driveManual(self.left_command/2, self.right_command/2)
+        else:
+            left_speed = 0.7
+            right_speed = 0.7
+
+        print("left: %1.2f" % left_speed, "right: %1.2f" % right_speed)
+        self.robot.drivetrain.driveManual(-left_speed, -right_speed)
 
     def isFinished(self):
         """Make this return true when this Command no longer needs to run execute()"""
