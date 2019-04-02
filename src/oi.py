@@ -3,26 +3,24 @@
 This is where the rubber meets the road: make the Xbox controller
 do what we want it to do.
 '''
-from commands.punch import Punch
-from commands.pull import Pull
+from commands.cover_hatch import CoverHatch
+from commands.eject_cargo import EjectCargo
+from commands.intake_cargo import IntakeCargo
+from commands.lift_front import LiftFront
+from commands.lift_rear import LiftRear
+from commands.lift_winch import LiftWinch
+from commands.lower_rear import LowerRear
+from commands.lower_winch import LowerWinch
 from commands.move_arm_with_triggers import MoveArmWithTriggers
 from commands.toggle_camera import ToggleCamera
-from commands.intake_cargo import IntakeCargo
-from commands.cover_hatch import CoverHatch
-from commands.lift_winch import LiftWinch
-from commands.lower_winch import LowerWinch
 from commands.punch_rear import PunchRear
 from commands.pull_rear import PullRear
-from commands.lift_rear import LiftRear
-from commands.lower_rear import LowerRear
-from commmands.park import Park
+from commands.park import Park
 from commands.invert_front import InvertFront
-from commands.eject_cargo import EjectCargo
+import wpilib
 from wpilib.interfaces.generichid import GenericHID
-
 from wpilib.buttons import JoystickButton
 from wpilib import XboxController
-import wpilib
 from thresholds import TriggerButton
 
 class OI:
@@ -38,33 +36,31 @@ class OI:
         robot.xbox0 = wpilib.XboxController(0)
         robot.xbox1 = wpilib.XboxController(1)
 
-        triggerbutton = TriggerButton(robot.xbox0, .1)
-        # punch is actually front pneumatic lift
-        punch = JoystickButton(robot.xbox0, XboxController.Button.kY)
-        rearlift = JoystickButton(robot.xbox0, XboxController.Button.kB)
         hatch = JoystickButton(robot.xbox0, XboxController.Button.kX)
+        park = JoystickButton(robot.xbox0, XboxController.Button.kBack)
         togglecamera = JoystickButton(robot.xbox0, XboxController.Button.kStart)
+        triggerbutton = TriggerButton(robot.xbox0, .1)
 
+        ejectcargo = JoystickButton(robot.xbox1, XboxController.Button.kX)
+        frontlift = JoystickButton(robot.xbox1, XboxController.Button.kStart)
         intake = JoystickButton(robot.xbox1, XboxController.Button.kA)
+        invertfront = JoystickButton(robot.xbox1, XboxController.Button.kStickRight)
         liftwinch = JoystickButton(robot.xbox1, XboxController.Button.kBumperRight)
         lowerwinch = JoystickButton(robot.xbox1, XboxController.Button.kBumperLeft)
-        ejectcargo = JoystickButton(robot.xbox1, XboxController.Button.kX)
-        invertfront = JoystickButton(robot.xbox1, XboxController.Button.kStickRight)
         punchrear = JoystickButton(robot.xbox1, XboxController.Button.kY)
-        park = JoystickButton(robot.xbox0, XboxController.Button.kBack)
+        rearlift = JoystickButton(robot.xbox1, XboxController.Button.kBack)
 
-        triggerbutton.whenPressed(MoveArmWithTriggers(robot))
-        intake.toggleWhenPressed(IntakeCargo(robot))
-        ejectcargo.toggleWhenPressed(EjectCargo(robot))
-        punch.whenPressed(Punch(robot))
-        punch.whenReleased(Pull(robot))
-        rearlift.whenPressed(LiftRear(robot))
-        rearlift.whenReleased(LowerRear(robot))
         hatch.toggleWhenPressed(CoverHatch(robot))
+        park.whileHeld(Park(robot))
+        togglecamera.whenPressed(ToggleCamera(robot))
+        triggerbutton.whenPressed(MoveArmWithTriggers(robot))
+
+        ejectcargo.toggleWhenPressed(EjectCargo(robot))
+        frontlift.toggleWhenPressed(LiftFront(robot))
+        intake.toggleWhenPressed(IntakeCargo(robot))
+        invertfront.toggleWhenPressed(InvertFront(robot))
         liftwinch.whileHeld(LiftWinch(robot))
         lowerwinch.whileHeld(LowerWinch(robot))
-        punchrear.whenPressed(PunchRear(robot))
         punchrear.whenReleased(PullRear(robot))
-        invertfront.toggleWhenPressed(InvertFront(robot))
-        togglecamera.whenPressed(ToggleCamera(robot))
-        park.whileHeld(Park(robot))
+        punchrear.whenPressed(PunchRear(robot))
+        rearlift.toggleWhenPressed(LiftRear(robot))

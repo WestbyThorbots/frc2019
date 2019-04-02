@@ -6,7 +6,6 @@ import wpilib
 from commandbased import CommandBasedRobot
 from wpilib.command import Scheduler
 from subsystems.drivetrain import DriveTrain
-from subsystems.puncher import Puncher
 from subsystems.rear_puncher import RearPuncher
 from subsystems.arm import Arm
 from subsystems.intake import Intake
@@ -14,7 +13,7 @@ from oi import OI
 from subsystems.elevator import Elevator
 from subsystems.hatch import Hatch
 from subsystems.intake_winch import IntakeWinch
-from subsystems.rear_lift import RearLift
+from subsystems.lift import Lift
 
 class MyRobot(CommandBasedRobot):
     '''Primary class, the Periodic methods in which are called
@@ -23,14 +22,13 @@ class MyRobot(CommandBasedRobot):
     def robotInit(self):
         '''Initialize all subsystems.'''
         self.drivetrain = DriveTrain(self)
-        self.puncher = Puncher()
         self.rear_puncher = RearPuncher()
         self.arm = Arm()
         self.intake = Intake()
         self.elevator = Elevator()
         self.hatch = Hatch()
         self.intake_winch = IntakeWinch()
-        self.rear_lift = RearLift()
+        self.lift = Lift()
 
         # The "front" of the robot (which end is facing forward)
         self.front = -1

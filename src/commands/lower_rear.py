@@ -7,14 +7,15 @@ class LowerRear(Command):
         super().__init__()
 
         self.robot = robot
-        self.requires(self.robot.rear_lift)
+        self.requires(self.robot.lift)
 
     def initialize(self):
         """Called just before this Command runs the first time"""
+        self.robot.lift.lower_rear()
 
     def execute(self):
         """Called repeatedly when this Command is scheduled to run"""
-        self.robot.rear_lift.retract()
+        self.robot.lift.lower_rear()
 
     def isFinished(self):
         """Make this return true when this Command no longer needs to run execute()"""
@@ -22,7 +23,6 @@ class LowerRear(Command):
 
     def end(self):
         """Called once after isFinished returns true"""
-        self.robot.rear_lift.stop()
 
     def interrupted(self):
         """Called when another Command which requires one or more of the same
