@@ -26,11 +26,10 @@ class PunchRear(Command):
         '''Make this return true when this Command no longer needs to
         run execute().'''
         print("Punch:isFinished")
-        return self.isTimedOut()
+        return True
 
     def end(self):
         '''Called once after isFinished returns true.'''
-        self.robot.rear_puncher.close()
         print("Punch:end")
 
     def interrupted(self):
