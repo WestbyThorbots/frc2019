@@ -36,4 +36,3 @@ class ToggleCamera(Command):
         """Called when another Command which requires one or more of the same
            subsystems is scheduled to run"""
         self.end()
-
