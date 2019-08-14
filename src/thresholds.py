@@ -21,3 +21,16 @@ class TriggerButton(Button):
         '''What you think it does.'''
         return (self.xbox.getTriggerAxis(GenericHID.Hand.kLeft) > self.threshold or
                 self.xbox.getTriggerAxis(GenericHID.Hand.kRight) > self.threshold)
+
+class StickButton(Button):
+
+    def __init__(self, xbox: XboxController, threshold: float) -> None:
+
+        super().__init__()
+
+        self.xbox = xbox
+        self.threshold = threshold
+
+    def get(self) -> bool:
+        return (abs(self.xbox.getX(GenericHID.Hand.kLeft)) > self.threshold or
+                abs(self.xbox.getY(GenericHID.Hand.kLeft)) > self.threshold)

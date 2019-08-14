@@ -16,12 +16,14 @@ from commands.toggle_camera import ToggleCamera
 from commands.punch_rear import PunchRear
 from commands.pull_rear import PullRear
 from commands.park import Park
+from commands.differentialdrive_with_xbox import DifferentialDriveWithXbox
 from commands.invert_front import InvertFront
 import wpilib
 from wpilib.interfaces.generichid import GenericHID
 from wpilib.buttons import JoystickButton
 from wpilib import XboxController
 from thresholds import TriggerButton
+from thresholds import StickButton
 
 class OI:
     '''Operator Interface - all button assignments and other human interface elements
@@ -40,6 +42,7 @@ class OI:
         park = JoystickButton(robot.xbox0, XboxController.Button.kBack)
         togglecamera = JoystickButton(robot.xbox0, XboxController.Button.kStart)
         triggerbutton = TriggerButton(robot.xbox0, .1)
+        stickbutton = StickButton(robot.xbox0, .1)
 
         ejectcargo = JoystickButton(robot.xbox1, XboxController.Button.kX)
         intakecargo = JoystickButton(robot.xbox1, XboxController.Button.kA)
@@ -54,6 +57,7 @@ class OI:
         park.whileHeld(Park(robot))
         togglecamera.whenPressed(ToggleCamera(robot))
         triggerbutton.whenPressed(MoveArmWithTriggers(robot))
+        stickbutton.whenPressed(DifferentialDriveWithXbox(robot))
 
         ejectcargo.toggleWhenPressed(EjectCargo(robot))
         intakecargo.toggleWhenPressed(IntakeCargo(robot))

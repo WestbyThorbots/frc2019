@@ -5,10 +5,8 @@ import math
 
 import wpilib
 from wpilib.command import Subsystem
-from wpilib import robotdrive
+from wpilib.drive import DifferentialDrive
 import ctre
-
-from commands.differentialdrive_with_xbox import DifferentialDriveWithXbox
 
 class DriveTrain(Subsystem):
     """Operate the drivetrain."""
@@ -29,7 +27,7 @@ class DriveTrain(Subsystem):
         self.rightB = ctre.WPI_TalonSRX(4)
 
         # TODO: switch to DifferentialDrive is the main object that deals with driving
-        self.drive = wpilib.RobotDrive(self.left, self.right)
+        self.drive = DifferentialDrive(self.left, self.right)
 
         #TODO: These probably will not be the actual ports used
         self.left_encoder = wpilib.Encoder(2, 3)
@@ -48,11 +46,6 @@ class DriveTrain(Subsystem):
             # Circumference in ft = 4in/12(in/ft)*PI
             self.left_encoder.setDistancePerPulse((4.0 / 12.0 * math.pi) / 360.0)
             self.right_encoder.setDistancePerPulse((4.0 / 12.0 * math.pi) / 360.0)
-
-    def initDefaultCommand(self):
-        """Do this when no other command is running.
-        Let the operator drive around using the assigned Xbox Controller."""
-        self.setDefaultCommand(DifferentialDriveWithXbox(self.robot))
 
     def driveManual(self, left, right):
         """Tank style driving for the DriveTrain.
